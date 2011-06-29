@@ -15,13 +15,13 @@ import org.slf4j.LoggerFactory;
 public class TestBuffer implements UnitTestChannel.ChanDelegate {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
-	private AlarmSender sender;
+	private AlarmSenderImpl sender;
 	private UnitTestChannel chan = new UnitTestChannel();
 	private int state;
 
 	@Before
 	public void setup() {
-		sender = new AlarmSender();
+		sender = new AlarmSenderImpl();
 		sender.setAlarmChannels(Collections.singletonList((AlarmChannel)chan));
 		chan.setDelegate(this);
 	}

@@ -18,7 +18,7 @@
 
 <bean id="utChan" class="com.solab.alarms.UnitTestChannel" />
 
-<bean id="alarmSender" class="com.solab.alarms.AlarmSender">
+<bean id="alarmSender" class="com.solab.alarms.AlarmSenderImpl">
 	<property name="alarmChannels"><list>
 		<ref local="utChan" />
 	</list></property>

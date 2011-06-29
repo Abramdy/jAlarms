@@ -1,6 +1,6 @@
 /*
 jAlarms A simple Java library to enable server apps to send alarms to sysadmins.
-Copyright (C) 2009 Enrique Zamudio Lopez
+Copyright (C) 2011 Enrique Zamudio Lopez
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
@@ -18,11 +18,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 package com.solab.alarms;
 
-/** This interface is used to connect to an AlarmSender instance over RMI, JNDI, etc.
+/** This interface is used to connect to an AlarmSenderImpl instance over RMI, JNDI, etc.
  *
  * @author Enrique Zamudio
  */
-public interface RemoteAlarmSender {
+public interface AlarmSender {
 
 	/** Sends an alarm through all channels, to the users defined for the specified source in each channel,
 	 * as long as the message hasn't been already sent very recently. If the message is sent, the time is recorded

@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import net.spy.memcached.MemcachedClient;
 import net.spy.memcached.OperationTimeoutException;
 
+import com.solab.util.AlarmHash;
 
 /** An alarm cache that uses memcached to store the data it needs to know if an alarm message should be
  * resent. This is useful in environments where you have several applications which can be using similar
@@ -78,8 +79,8 @@ public class AlarmMemcachedClient implements AlarmCache {
 			}
 		}
 		String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
-			AlarmSender.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
-				source == null ? "" : source, AlarmSender.hash(message));
+			AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
+				source == null ? "" : source, AlarmHash.hash(message));
 		//We don't care about the actual value, just that the key exists
 		mc.set(k, channel == null ? defint : (channel.getMinResendInterval() / 1000), (byte)0);
 	}
@@ -91,8 +92,8 @@ public class AlarmMemcachedClient implements AlarmCache {
 			return true;
 		}
 		String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
-			AlarmSender.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
-				source == null ? "" : source, AlarmSender.hash(message));
+			AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
+				source == null ? "" : source, AlarmHash.hash(message));
 		//If the entry exists, don't resend
 		try {
 			return mc.get(k) == null;

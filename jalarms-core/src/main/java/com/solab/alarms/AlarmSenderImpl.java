@@ -18,8 +18,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 package com.solab.alarms;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -37,27 +35,13 @@ import javax.annotation.PreDestroy;
  * 
  * @author Enrique Zamudio
  */
-public class AlarmSender implements RemoteAlarmSender {
+public class AlarmSenderImpl implements AlarmSender {
 
-	private static final char[] hex = new char[]{
-		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-	};
 	private List<AlarmChannel> chans = Collections.emptyList();
 	private AlarmCache cache;
 	private int bufTime;
 	private ScheduledExecutorService timer;
 	private ConcurrentHashMap<String, CachedAlarm> buffer;
-	//MessageDigest instances are not thread-safe, so we store them in a ThreadLocal variable.
-	private static ThreadLocal<MessageDigest> md5 = new ThreadLocal<MessageDigest>(){
-		@Override
-		protected MessageDigest initialValue() {
-			try {
-				return MessageDigest.getInstance("MD5");
-			} catch (NoSuchAlgorithmException ex) {
-				return null;
-			}
-		}
-	};
 
 	/** Sets the time in milliseconds that the alarms sent via {@link #sendAlarmAlways(String, String)} are
 	 * buffered before actually sending them. Default is 0 which causes alarms to be sent immediately. If
@@ -120,7 +104,7 @@ public class AlarmSender implements RemoteAlarmSender {
 	 */
 	public void sendAlarmAlways(final String msg, final String source) {
 		if (bufTime > 0) {
-			String k = hash(String.format("%s:%s", source == null ? "" : source, msg));
+			String k = com.solab.util.AlarmHash.hash(String.format("%s:%s", source == null ? "" : source, msg));
 			CachedAlarm ca = buffer.get(k);
 			if (ca == null) {
 				ca = new CachedAlarm(source, msg);
@@ -154,7 +138,7 @@ public class AlarmSender implements RemoteAlarmSender {
 	public void init() {
 		if (bufTime > 0) {
 			timer = Executors.newSingleThreadScheduledExecutor();
-			buffer = new ConcurrentHashMap<String, AlarmSender.CachedAlarm>();
+			buffer = new ConcurrentHashMap<String, CachedAlarm>();
 			timer.scheduleWithFixedDelay(new Runnable(){
 				public void run() {
 					long now = System.currentTimeMillis();
@@ -193,24 +177,6 @@ public class AlarmSender implements RemoteAlarmSender {
 		if (cache != null) {
 			cache.shutdown();
 		}
-	}
-
-	/** Returns a MD5 hash of the specified message. It can be used to keep a map of the messages sent along
-	 * with the last time for each one, as is done in the AbstractAlarmChannel. */
-	static String hash(final String msg) {
-		MessageDigest _md = md5.get();
-		String hash = "hash";
-		if (_md != null) {
-			_md.reset();
-			byte[] buf = _md.digest(msg.getBytes());
-			char[] c = new char[buf.length * 2];
-			for (int i = 0; i < buf.length; i++) {
-				c[i * 2] = hex[(buf[i] & 0xf0) >> 4];
-				c[(i * 2) + 1] = hex[buf[i] & 0x0f];
-			}
-			hash = new String(c);
-		}
-		return hash;
 	}
 
 	public String getStatus() {

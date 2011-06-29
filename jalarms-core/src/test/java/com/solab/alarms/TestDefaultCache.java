@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class TestDefaultCache implements UnitTestChannel.ChanDelegate {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	protected AlarmSender sender = new AlarmSender();
+	protected AlarmSenderImpl sender = new AlarmSenderImpl();
 	protected UnitTestChannel chan1 = new UnitTestChannel();
 	protected UnitTestChannel chan2 = new UnitTestChannel();
 	protected int c1t = 1000;

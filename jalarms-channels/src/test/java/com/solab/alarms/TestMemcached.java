@@ -21,7 +21,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 
 	private AlarmMemcachedClient mc;
 	private final Logger log = LoggerFactory.getLogger(getClass());
-	protected AlarmSender sender = new AlarmSender();
+	protected AlarmSenderImpl sender = new AlarmSenderImpl();
 	protected UnitTestChannel chan1 = new UnitTestChannel();
 	protected UnitTestChannel chan2 = new UnitTestChannel();
 	protected int c1t = 1000;

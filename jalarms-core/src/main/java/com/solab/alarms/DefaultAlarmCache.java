@@ -2,6 +2,7 @@ package com.solab.alarms;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import com.solab.util.AlarmHash;
 
 /** This is the default cache, which uses a map to store the last date a message was sent for a given
  * channel/msg/source cobination.
@@ -26,8 +27,8 @@ public class DefaultAlarmCache implements AlarmCache {
 	public void store(AlarmChannel channel, String source, String message) {
 		if (channel == null || channel.getMinResendInterval() > 0) {
 			String k = channel == null ? String.format("ALL:%s:%s", source == null ? "" : source,
-				AlarmSender.hash(message)) : String.format("chan%s:%s:%s", channel.hashCode(), source == null ? "" : source,
-				AlarmSender.hash(message));
+				AlarmHash.hash(message)) : String.format("chan%s:%s:%s", channel.hashCode(), source == null ? "" : source,
+				AlarmHash.hash(message));
 			lastSends.put(k, System.currentTimeMillis());
 		}
 	}
@@ -38,8 +39,8 @@ public class DefaultAlarmCache implements AlarmCache {
 		boolean resend = true;
 		if (channel == null || channel.getMinResendInterval() > 0) {
 			String k = channel == null ? String.format("ALL:%s:%s", source == null ? "" : source,
-				AlarmSender.hash(message)) : String.format("chan%s:%s:%s", channel.hashCode(), source == null ? "" : source,
-				AlarmSender.hash(message));
+				AlarmHash.hash(message)) : String.format("chan%s:%s:%s", channel.hashCode(), source == null ? "" : source,
+				AlarmHash.hash(message));
 			Long then = lastSends.get(k);
 			//Check the last time this same message was sent
 			if (then != null) {
