@@ -1,32 +1,90 @@
 //This is the main build script for jAlarms. It builds the subprojects included in settings.gradle.
 apply plugin: 'maven'
 description='A simple to use alarm system for Java server applications. With jAlarms you can notify different users through different means about certain events in your application, so they can receive notice via email, MSN, SMS, Twitter, etc.'
+version='1.6.0'
+
+slf4jVersion='1.6.1'
 
 buildscript {
 	repositories {
+		mavenLocal()
 		mavenCentral()
+		mavenRepo name: "Gradle", urls: "http://repo.gradle.org/gradle/plugins-snapshots/"
 	}
 	dependencies {
-		classpath 'de.huxhorn.gradle:de.huxhorn.gradle.pgp-plugin:0.0.3'
+		classpath 'org.gradle.plugins:gradle-signing-plugin:0.0.1-SNAPSHOT'
+		//classpath 'de.huxhorn.gradle:de.huxhorn.gradle.pgp-plugin:0.0.3'
 	}
 }
 
-dependsOnChildren()
-defaultTasks 'build'
-
-//Use the Java plugin on all projects, and set the same version and group.
 allprojects {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+}
+
+//Here we set common stuff for all subprojects: the Maven repos, exclude commons-logging (use jcl-over-slf4j in UT),
+//set some common dependencies
+subprojects {
+	version=parent.version
 	apply plugin:'java'
 	apply plugin:'maven'
-	version='1.5.3-SNAPSHOT'
+	apply plugin:'project-report'
+	sourceCompatibility='1.6'
+	targetCompatibility='1.6'
 	group='net.sf.jalarms'
 
-uploadArchives {
-	repositories.mavenDeployer {
-		configuration=configurations.archives
-		repository(url: "http://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-			authentication(userName:nexusUsername, password:nexusPassword)
-		}
+	configurations {
+		all*.exclude group:'commons-logging', module:'commons-logging'
+		deployerJars
+		published.extendsFrom archives, signatures
+	}
+
+	dependencies {
+		compile "org.slf4j:slf4j-api:${slf4jVersion}"
+		testCompile 'junit:junit:4.8.2'
+		testRuntime "org.slf4j:slf4j-simple:${slf4jVersion}", "org.slf4j:jcl-over-slf4j:${slf4jVersion}"
+		deployerJars 'org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6'
+	}
+	tasks.javadoc.options.use=true
+	tasks.javadoc.options.links=[
+		'http://download.oracle.com/javase/6/docs/api/', 'http://slf4j.org/apidocs/',
+		'http://static.springsource.org/spring/docs/3.0.x/javadoc-api/',
+		'http://jalarms.sourceforge.net/core/apidocs/'
+	]
+
+	task javadocJar(type:Jar, dependsOn:'javadoc') {
+		from javadoc.destinationDir
+		classifier='javadoc'
+	}
+	task sourcesJar(type:Jar, dependsOn:classes) {
+		from sourceSets.main.allSource
+		classifier='sources'
+	}
+	artifacts {
+		archives javadocJar
+		archives sourcesJar
+	}
+
+	apply plugin:'signing'
+	signing {
+		sign configurations.archives
+	}
+	deployUsernameProperty = "nexusUsername"
+	deployPasswordProperty = "nexusPassword"
+
+	uploadPublished {
+		repositories {
+			project.deployer=repositories.mavenDeployer {
+				beforeDeployment { MavenDeployment deployment ->
+					def signedPomArtifact=sign(deployment.pomArtifact).singleArtifact
+					signedPomArtifact.type="pom."+signing.type.extension
+					deployment.addArtifact(signedPomArtifact)
+				}
+				repository(url:'http://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+					authentication(userName:nexusUsername, password:nexusPassword)
+				}
 		pom.project {
 			name 'jAlarms - A simple alarm notification system for Java'
 			packaging 'jar'
@@ -62,49 +120,27 @@ uploadArchives {
 				}
 			}
 		}
+
+
+			}
+		}
 	}
-}
-apply plugin: de.huxhorn.gradle.pgp.PgpPlugin
-pgp {
-	secretKeyRingFile = new File("${System.properties['user.home']}/.gnupg/secring.gpg")
-	keyId=pgpKeyId
-	password=pgpKeyPassphrase
-}
 }
 
-//Here we set common stuff for all subprojects: the Maven repos, exclude commons-logging (use jcl-over-slf4j in UT),
-//set some common dependencies
-subprojects {
-	repositories {
-		mavenLocal()
-		mavenCentral()
-	}
-	configurations {
-		all*.exclude group:'commons-logging', module:'commons-logging'
-	}
-	dependencies {
-		compile 'org.slf4j:slf4j-api:1.6.1'
-		testCompile 'junit:junit:4.8.2'
-		testRuntime 'org.slf4j:slf4j-simple:1.6.1', 'org.slf4j:jcl-over-slf4j:1.6.1'
-	}
-	tasks.javadoc.options.use=true
-	tasks.javadoc.options.links=[
-		'http://download.oracle.com/javase/6/docs/api/', 'http://slf4j.org/apidocs/',
-		'http://static.springsource.org/spring/docs/3.0.x/javadoc-api/',
-		'http://jalarms.sourceforge.net/core/apidocs/'
-	]
-	task javadocJar(type:Jar, dependsOn:'javadoc') {
-		from javadoc.destinationDir
-		classifier='javadoc'
-	}
-	task sourcesJar(type:Jar) {
-		from sourceSets.main.allSource
-		classifier='sources'
-	}
-	artifacts {
-		archives javadocJar
-		archives sourcesJar
-	}
+//Only for parent project
+configurations {
+	published.extendsFrom archives, signatures
 }
-tasks.jar.enabled=false
+
+subprojects.each {
+	project.evaluationDependsOn(it.name)
+}
+
+task clean(type: Delete) {
+  delete buildDirName
+}
+
+task generateRelease(dependsOn: subprojects.uploadPublished, 
+  group: "Release artifact",
+  description: "Generates and uploads a final release to Sonatype Nexus")
 
