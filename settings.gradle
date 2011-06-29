@@ -1,1 +1,1 @@
-include 'jalarms-core', 'jalarms-channels', 'jalarms-aop'
+include 'jalarms-core', 'jalarms-channels', 'jalarms-aop', 'jalarms-daemon'
