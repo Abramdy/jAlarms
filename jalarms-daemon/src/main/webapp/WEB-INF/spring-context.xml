@@ -23,9 +23,4 @@
 	p:serviceName="jAlarms" p:service-ref="alarmSender"
 	p:serviceInterface="com.solab.alarms.AlarmSender" />
 
-<!-- If you set the constructor argument to a valid JNDI path, this bean will bind the alarmSender to that path -->
-<bean class="com.solab.alarms.daemon.JndiExporter">
-	<constructor-arg value="java:/jAlarms" />
-</bean>
-
 </beans>

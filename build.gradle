@@ -13,7 +13,6 @@ buildscript {
 	}
 	dependencies {
 		classpath 'org.gradle.plugins:gradle-signing-plugin:0.0.1-SNAPSHOT'
-		//classpath 'de.huxhorn.gradle:de.huxhorn.gradle.pgp-plugin:0.0.3'
 	}
 }
 
@@ -88,7 +87,7 @@ subprojects {
 		pom.project {
 			name 'jAlarms - A simple alarm notification system for Java'
 			packaging 'jar'
-			description 'A simple to use alarm system for Java server applications. With jAlarms you can notify different users through different means about certain events in your application, so they can receive notice via email, MSN, SMS, Twitter, etc.'
+			description subproj.description
 			url 'http://jalarms.sourceforge.net/'
 			inceptionYear '2009'
 			scm {
