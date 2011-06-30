@@ -1,0 +1,49 @@
+apply plugin:'war'
+apply plugin:'jetty'
+
+description='A daemon-like application that contains an AlarmSender, and accepts connections using different protocols, to allow several applications (even non-Java) to send alarms through it.'
+
+dependencies {
+	compile project(':jalarms-core'), project(':jalarms-channels')
+	runtime 'org.springframework:spring-web:3.0.5.RELEASE', "org.slf4j:slf4j-simple:${slf4jVersion}"
+	testCompile 'junit:junit:4.8.2', 'org.springframework:spring-test:3.0.5.RELEASE'
+}
+
+configurations {
+	integrationCompile { extendsFrom testCompile }
+	integrationRuntime { extendsFrom integrationCompile, testRuntime }
+}
+
+sourceSets {
+	integration {
+		java {
+			srcDir 'src/integration/java'
+		}
+		resources {
+			srcDir 'src/integration/resources'
+		}
+		compileClasspath=sourceSets.main.classes+sourceSets.test.classes+configurations.integrationCompile
+		runtimeClasspath=classes+compileClasspath+configurations.integrationRuntime
+	}
+}
+
+webAppDirName='src/main/webapp'
+stopKey='foo'
+stopPort=9451
+
+gradle.taskGraph.whenReady { graph->
+	if (graph.hasTask(integrationTest)) {
+		[jettyRun, jettyRunWar]*.daemon=true
+	}
+}
+
+task integrationTest(type:Test, dependsOn:jettyRun) {
+	testClassesDir=sourceSets.integration.classesDir
+	classpath=sourceSets.integration.runtimeClasspath
+}
+
+task shutdownServer(dependsOn:integrationTest) {
+	jettyStop:execute()
+}
+
+build.dependsOn shutdownServer

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<context:annotation-config />
+
+<bean id="alarmSender" class="com.solab.alarms.AlarmSenderImpl">
+	<property name="alarmChannels"><list>
+		<ref local="testChannel" />
+	</list></property>
+</bean>
+
+<bean id="testChannel" class="com.solab.alarms.channels.TestChannel" />
+
+<!-- These is the RMI proxy -->
+<bean id="rmiProxy" class="org.springframework.remoting.rmi.RmiServiceExporter"
+	p:registryPort="1099"
+	p:serviceName="jAlarms" p:service-ref="alarmSender"
+	p:serviceInterface="com.solab.alarms.AlarmSender" />
+
+<!-- If you set the constructor argument to a valid JNDI path, this bean will bind the alarmSender to that path -->
+<bean class="com.solab.alarms.daemon.JndiExporter">
+	<constructor-arg value="java:/jAlarms" />
+</bean>
+
+</beans>
