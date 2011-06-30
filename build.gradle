@@ -25,7 +25,7 @@ allprojects {
 
 //Here we set common stuff for all subprojects: the Maven repos, exclude commons-logging (use jcl-over-slf4j in UT),
 //set some common dependencies
-subprojects {
+subprojects { subproj->
 	version=parent.version
 	apply plugin:'java'
 	apply plugin:'maven'

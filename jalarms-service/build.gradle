@@ -1,6 +1,6 @@
 apply plugin:'war'
 apply plugin:'jetty'
-description='A web application that contains an AlarmSender and published it as a RMI service.'
+description='A web application that contains an AlarmSender to publish it as a RMI service.'
 
 dependencies {
 	compile project(':jalarms-core'), project(':jalarms-channels')
