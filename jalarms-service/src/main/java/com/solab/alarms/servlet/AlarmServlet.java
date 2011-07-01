@@ -1,3 +1,21 @@
+/*
+ * jAlarms A simple Java library to enable server apps to send alarms to sysadmins.
+ * Copyright (C) 2011 Enrique Zamudio Lopez
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
+ */
 package com.solab.alarms.servlet;
 
 import javax.servlet.*;
@@ -15,13 +33,13 @@ import org.springframework.beans.factory.config.*;
 public class AlarmServlet extends HttpServlet {
 
 	private AlarmSenderImpl sender;
-	private java.util.Properties authbase;
+	private PasswordVerifier auth;
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		WebApplicationContext ctxt = WebApplicationContextUtils.getWebApplicationContext(config.getServletContext());
 		sender = ctxt.getBean(AlarmSenderImpl.class);
-		authbase = (java.util.Properties)ctxt.getBean("servletPasswords");
+		auth = ctxt.getBean(PasswordVerifier.class);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,12 +52,7 @@ public class AlarmServlet extends HttpServlet {
 		String pass = request.getParameter("password");
 		String resp = "ERROR Incomplete Data, you must send field 'alarm' and optionally 'src'";
 		if (msg != null) {
-			String vpass = authbase.getProperty(src == null ? "defaultPassword" : src);
-			boolean ok = true;
-			if (vpass != null && vpass.length() > 0) {
-				ok = vpass.equals(pass);
-			}
-			if (ok) {
+			if (auth.verifyPassword(pass, src)) {
 				sender.sendAlarm(msg, src);
 				resp = "OK";
 			} else {

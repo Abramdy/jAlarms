@@ -23,7 +23,8 @@
 	p:serviceName="jAlarms" p:service-ref="alarmSender"
 	p:serviceInterface="com.solab.alarms.AlarmSender" />
 
-<bean id="servletPasswords" class="java.util.Properties">
+<bean id="servletPasswords" class="com.solab.alarms.servlet.PropertiesPasswordVerifier"
+	p:strict="false">
 	<constructor-arg><props>
 		<prop key="defaultPassword">jAlarms</prop>
 		<prop key="src1">password for source named src1</prop>
