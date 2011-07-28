@@ -1,0 +1,12 @@
+	-----
+	jAlarms Web Application
+	-----
+	Enrique Zamudio
+	-----
+
+Web Application
+
+  In JEE and/or web application environments, there may be many applications in the same container; instead
+  of having to configure an AlarmSender in each application, there can be one AlarmSender in the container
+  available via RMI, so all the applications can use it and only one configuration must be managed.
+

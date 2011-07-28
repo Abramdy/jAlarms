@@ -5,7 +5,7 @@ version='1.6.0'
 
 slf4jVersion='1.6.1'
 
-buildscript {
+/*buildscript {
 	repositories {
 		mavenLocal()
 		mavenCentral()
@@ -14,7 +14,7 @@ buildscript {
 	dependencies {
 		classpath 'org.gradle.plugins:gradle-signing-plugin:0.0.1-SNAPSHOT'
 	}
-}
+}*/
 
 allprojects {
 	repositories {
@@ -135,9 +135,9 @@ subprojects.each {
 	project.evaluationDependsOn(it.name)
 }
 
-task clean(type: Delete) {
+/*task clean(type: Delete) {
   delete buildDirName
-}
+}*/
 
 task generateRelease(dependsOn: subprojects.uploadPublished, 
   group: "Release artifact",

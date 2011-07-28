@@ -1,17 +1,11 @@
 description='An AOP extension for jAlarms, based on AspectJ and Spring AOP.'
+dependsOn ':jalarms-core'
 
 dependencies {
 	compile 'org.aspectj:aspectjrt:1.6.11', project(':jalarms-core')
-	testCompile 'org.springframework:spring-test:3.0.5.RELEASE'
+	testCompile 'org.springframework:spring-test:3.0.5.RELEASE',
+		files(project(':jalarms-core').sourceSets.test.output.classesDir)
 	testRuntime 'org.springframework:spring-beans:3.0.5.RELEASE',
 		'org.springframework:spring-context:3.0.5.RELEASE',
 		'org.aspectj:aspectjweaver:1.6.11', 'cglib:cglib:2.2.2'
-}
-
-//We need to add some test classes from the core project (UnitTestChannel)
-sourceSets {
-	test {
-		compileClasspath += project(':jalarms-core').sourceSets.test.classes
-		runtimeClasspath += project(':jalarms-core').sourceSets.test.classes
-	}
 }

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="jalarms">
+<project name="jAlarms">
 <bannerLeft>
 	<name>jAlarms</name>
 	<src>images/logo.png</src>
 	<href>http://jalarms.sourceforge.net/</href>
 </bannerLeft>
 <bannerRight>
-	<src>images/logo.png</src>
+	<name>GitHub</name>
+	<src>https://d3nwyuy0nl342s.cloudfront.net/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67</src>
+	<href>http://github.com/chochos/jAlarms</href>
+	<alt>Fork me on GitHub</alt>
 </bannerRight>
 <body>
 	<links>
@@ -14,7 +17,7 @@
 		<item name="Download" href="http://sourceforge.net/projects/jalarms/files/jAlarms/"/>
 	</links>
 
-	<menu name="jAlarms 1.5">
+	<menu name="jAlarms 1.6">
 		<item name="Introduction" href="index.html"/>
 		<item name="Core API docs" href="core/apidocs/index.html" />
 		<item name="Channel API docs" href="channels/apidocs/index.html" />
@@ -26,6 +29,7 @@
 		<item name="AOP &amp; Annotations" href="aop.html"/>
 		<item name="Message caching" href="cache.html" />
 		<item name="Alarm Buffering" href="buffer.html" />
+		<item name="Web application" href="webapp.html" />
 		<item name="Download" href="http://sourceforge.net/projects/jalarms/files/jAlarms/" />
 		<item name="Español" href="/es/index.html" />
 	</menu>

@@ -24,8 +24,8 @@ sourceSets {
 		resources {
 			srcDir 'src/integration/resources'
 		}
-		compileClasspath=sourceSets.main.classes+sourceSets.test.classes+configurations.integrationCompile
-		runtimeClasspath=classes+compileClasspath+configurations.integrationRuntime
+		compileClasspath=sourceSets.main.output+sourceSets.test.output+configurations.integrationCompile
+		runtimeClasspath=output+compileClasspath+configurations.integrationRuntime
 	}
 }
 
@@ -41,7 +41,7 @@ gradle.taskGraph.whenReady { graph->
 }
 
 task integrationTest(type:Test, dependsOn:jettyRun) {
-	testClassesDir=sourceSets.integration.classesDir
+	testClassesDir=sourceSets.integration.output.classesDir
 	classpath=sourceSets.integration.runtimeClasspath
 }
 
