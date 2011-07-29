@@ -1,5 +1,8 @@
 description='An AOP extension for jAlarms, based on AspectJ and Spring AOP.'
-dependsOn ':jalarms-core'
+
+afterEvaluate {
+	tasks.compileTestJava.dependsOn ':jalarms-core:compileTestJava'
+}
 
 dependencies {
 	compile 'org.aspectj:aspectjrt:1.6.11', project(':jalarms-core')
