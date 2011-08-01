@@ -134,6 +134,19 @@ public class TwitterChannel extends AbstractAlarmChannel {
 	/** Creates the HMAC-SHA1 signature for the specified message. This method is not thread-safe
 	 * so it should be used with caution. */
 	String sign(String value) throws InvalidKeyException {
+		if (hmac == null) {
+			synchronized (this) {
+				if (hmac == null) {
+					try {
+						init();
+					} catch (NoSuchAlgorithmException ex) {
+						log.error("This is bad! Can't find HmacSHA1 signing algorithm!", ex);
+					} catch (MalformedURLException ex) {
+						log.error("This is bad! Twitter apiUrl is invalid", ex);
+					}
+				}
+			}
+		}
 		hmac.init(new SecretKeySpec(tsecret, "HmacSHA1"));
 		hmac.update(value.getBytes());
 		byte[] sign = hmac.doFinal();
