@@ -21,6 +21,7 @@ package com.solab.alarms;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,10 +71,28 @@ public abstract class AbstractAlarmChannel implements AlarmChannel {
 		}
 	}
 
-	/** Shuts down the thread pool and rejects any more incoming alarms. */
+	/** Shuts down the thread pool and rejects any more incoming alarms. Awaits up to 5 seconds to send out
+	 * any pending alarms. */
 	public void shutdown() {
 		up = false;
 		sendPool.shutdown();
+		int tries = 5;
+		if (!sendPool.isTerminated()) {
+			log.debug("jAlarms: channel {} sending out pending alarms", getClass().getSimpleName());
+		}
+		boolean finished = false;
+		while (tries > 0 && sendPool.isTerminated()) {
+			try {
+				finished |= sendPool.awaitTermination(1, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				//Interrupted, so exit now
+				tries = 0;
+			}
+			tries--;
+		}
+		if (!finished) {
+			log.warn("jAlarms: channel {} was unable to send out all pending alarms.", getClass().getSimpleName());
+		}
 	}
 
 	/** Subclasses need to create and return a new Runnable in each call to this method. The returned

@@ -37,7 +37,8 @@ public interface AlarmChannel {
 	public int getMinResendInterval();
 
 	/** Shuts the channel down, closing any open connections it has and freeing up all its resources.
-	 * Once this method is invoked on a channel, the channel should not be used again. */
+	 * Once this method is invoked on a channel, the channel should not be used again.
+	 * This method should also send any pending alarms, blocking the calling thread until done. */
 	public void shutdown();
 
 }
