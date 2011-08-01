@@ -76,12 +76,13 @@ public abstract class AbstractAlarmChannel implements AlarmChannel {
 	public void shutdown() {
 		up = false;
 		sendPool.shutdown();
-		int tries = 5;
+		boolean finished = true;
 		if (!sendPool.isTerminated()) {
+			finished = false;
 			log.debug("jAlarms: channel {} sending out pending alarms", getClass().getSimpleName());
 		}
-		boolean finished = false;
-		while (tries > 0 && sendPool.isTerminated()) {
+		int tries = 5;
+		while (tries > 0 && !sendPool.isTerminated()) {
 			try {
 				finished |= sendPool.awaitTermination(1, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
