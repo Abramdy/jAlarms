@@ -141,41 +141,63 @@ public class AlarmSenderImpl implements AlarmSender {
 			buffer = new ConcurrentHashMap<String, CachedAlarm>();
 			timer.scheduleWithFixedDelay(new Runnable(){
 				public void run() {
-					long now = System.currentTimeMillis();
-					//check queue, send alarms
-					Iterator<Map.Entry<String, CachedAlarm>> iter;
-					for (iter = buffer.entrySet().iterator(); iter.hasNext();) {
-						Map.Entry<String, CachedAlarm> e = iter.next();
-						if (e.getValue().times > 1) {
-							//Check firstSent against buffer time
-							if (now-e.getValue().firstSent >= bufTime) {
-								iter.remove();
-								for (AlarmChannel c: chans) {
-									c.send(String.format("%s (%dx)", e.getValue().msg, e.getValue().times),
-										e.getValue().src);
-								}
-							}
-						} else if (now-e.getValue().lastSent >= 29800) {
-							//In practice, the scheduler tends to run the task a little under 30s
-							iter.remove();
-							for (AlarmChannel c: chans) {
-								c.send(e.getValue().msg, e.getValue().src);
-							}
-						}
-					}
+					sendCachedAlarms();
 				}
 			}, 30, 30, TimeUnit.SECONDS);
 		}
 	}
 
-	/** Shuts down all channels, and the alarm cache. */
+	/** Sends the alarms that have been cached, if the conditions are right. The right conditions are:
+	 * The alarm has been received more than once in the period of time specified in the alarmTimeBuffer property,
+	 * or the alarm has not been received again in 30 seconds. */
+	protected void sendCachedAlarms() {
+		long now = System.currentTimeMillis();
+		//check queue, send alarms
+		Iterator<Map.Entry<String, CachedAlarm>> iter;
+		for (iter = buffer.entrySet().iterator(); iter.hasNext();) {
+			Map.Entry<String, CachedAlarm> e = iter.next();
+			if (e.getValue().times > 1) {
+				//Check firstSent against buffer time
+				if (now-e.getValue().firstSent >= bufTime) {
+					iter.remove();
+					for (AlarmChannel c: chans) {
+						c.send(String.format("%s (%dx)", e.getValue().msg, e.getValue().times),
+							e.getValue().src);
+					}
+				}
+			} else if (now-e.getValue().lastSent >= 29800) {
+				//In practice, the scheduler tends to run the task a little under 30s
+				iter.remove();
+				for (AlarmChannel c: chans) {
+					c.send(e.getValue().msg, e.getValue().src);
+				}
+			}
+		}
+	}
+
+	/** Shuts down all channels, and the alarm cache. Also sends out any cached alarms. This method can block
+	 * the calling thread for some time, if any channels block while they send their pending alarms. */
 	@PreDestroy
 	public void shutdown() {
-		for (AlarmChannel c: chans) {
-			c.shutdown();
+		if (timer != null) {
+			//There's a timer, so there's also a buffer
+			timer.shutdownNow();
+			for (Map.Entry<String, CachedAlarm> pend : buffer.entrySet()) {
+				for (AlarmChannel c: chans) {
+					if (pend.getValue().times > 1) {
+						c.send(String.format("%s (%dx)", pend.getValue().msg, pend.getValue().times),
+							pend.getValue().src);
+					} else {
+						c.send(pend.getValue().msg, pend.getValue().src);
+					}
+				}
+			}
 		}
 		if (cache != null) {
 			cache.shutdown();
+		}
+		for (AlarmChannel c: chans) {
+			c.shutdown();
 		}
 	}
 
