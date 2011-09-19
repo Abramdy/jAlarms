@@ -231,9 +231,9 @@ public class TwitterChannel extends AbstractAlarmChannel {
 		public void run() {
 			int lim = 133;
 			if (prefix == null) {
-				msg = String.format("%1$TH%1$TM%1$TS:%2$s", ts, msg);
+				msg = String.format("%TH%<TM%<TS:%s", ts, msg);
 			} else {
-				msg = String.format("%1$TH%1$TM%1$TS[%2$s]%3$s", ts, prefix, msg);
+				msg = String.format("%TH%<TM%<TS[%s]%s", ts, prefix, msg);
 				lim -= prefix.length() + 1;
 			}
 			while (msg.length() > lim) {
@@ -250,10 +250,10 @@ public class TwitterChannel extends AbstractAlarmChannel {
 				String sub = String.format("%s-", msg.substring(0, pos));
 				if (prefix == null) {
 					//sub = String.format("%1$TH%1$TM%1$TS:-%2$s", ts, msg.substring(0, pos));
-					msg = String.format("%1$TH%1$TM%1$TS:-%2$s", ts, msg.substring(pos+1));
+					msg = String.format("%TH%<TM%<TS:-%s", ts, msg.substring(pos+1));
 				} else {
 					//sub = String.format("%1$TH%1$TM%1$TS[%2$s]-%3$s", ts, prefix, msg.substring(0, pos));
-					msg = String.format("%1$TH%1$TM%1$TS[%2$s]-%3$s", ts, prefix, msg.substring(pos+1));
+					msg = String.format("%TH%<TM%<TS[%s]-%s", ts, prefix, msg.substring(pos+1));
 				}
 				send(sub);
 				try {
