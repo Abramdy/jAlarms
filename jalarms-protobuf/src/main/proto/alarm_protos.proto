@@ -5,5 +5,5 @@ option java_package="com.solab.alarms.protobuf";
 message Alarm {
   required string alarm = 1;
   optional string source = 2;
-  required bool always = 3;
+  optional bool always = 3;
 }
