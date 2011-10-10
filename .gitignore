@@ -1,3 +1,6 @@
 .gradle
 target
 build
+bin
+.classpath
+.project

@@ -7,19 +7,37 @@ import javax.annotation.Resource;
 import org.slf4j.*;
 import com.solab.alarms.protobuf.AlarmProtos.Alarm;
 
+/** A TCP server for the Protocol Buffers AlarmSender client.
+ * Once configured, the start() method must be invoked on the component
+ * so that it starts listening on the TCP port and starts sending the alarms.
+ * This components requires a configured AlarmSender to forward the alarms to.
+ * Internally, this component uses a cached thread pool to handle the incoming
+ * connections. Each connection can send any number of alarms, no more than 5
+ * seconds apart. After 5 seconds of inactivity, the connection is closed.
+ *
+ * @author Enrique Zamudio
+ */
 public class ProtobufAlarmServer extends Thread {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private final int port;
 	private @Resource AlarmSender sender;
-	private ExecutorService tpool = Executors.newCachedThreadPool();
+	private final ExecutorService tpool = Executors.newCachedThreadPool();
 
+	/** Creates a new instance which listens on the specified TCP port. */
 	public ProtobufAlarmServer(int tcpPort) {
 		port = tcpPort;
 		setName("jalarms-protobuf");
 	}
 
+	/** Specified the AlarmSender to forward the alarms to. */
 	public void setAlarmSender(AlarmSender value) { sender = value; }
+
+	/** Specifies the maximum number of threads that the internal thread pool
+	 * should allow. By default it is unbound. */
+	public void setMaxThreads(int value) {
+		((ThreadPoolExector)tpool).setMaximumPoolSize(value);
+	}
 
 	public void run() {
 		try {
@@ -35,6 +53,10 @@ public class ProtobufAlarmServer extends Thread {
 		}
 	}
 
+	/** This task is used to handle a connection inside the thread pool. It can
+	 * read any number of incoming messages, as long as no more than 5 seconds pass
+	 * between the last message and the next; after 5 seconds of inactivity, the
+	 * connection is closed. */
 	private class AlarmListener implements Runnable {
 		private final Socket sock;
 		private AlarmListener(Socket s) { sock = s; }
