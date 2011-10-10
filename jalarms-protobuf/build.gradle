@@ -1,8 +1,6 @@
 apply plugin:'groovy'
 apply plugin: ws.antonov.gradle.plugins.protobuf.ProtobufPlugin
 defaultTasks 'build'
-sourceCompatibility=6
-targetCompatibility=6
 
 buildscript {
 	repositories {
