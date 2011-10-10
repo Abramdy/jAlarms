@@ -2,8 +2,9 @@ package com.solab.alarms;
 
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.io.IOException;
+import java.io.*;
 import java.util.concurrent.*;
+import javax.annotation.*;
 import org.slf4j.*;
 import com.solab.alarms.protobuf.AlarmProtos.Alarm;
 
@@ -19,6 +20,7 @@ public class ProtobufAlarmClient implements AlarmSender {
 	private int connectTimeout = 1000;
 	private long lastWrite;
 	private Socket sock;
+	private BufferedOutputStream bout;
 	private final ExecutorService queue = Executors.newSingleThreadExecutor();
 
 	/** Creates a new AlarmSender which will connect to a ProtobufAlarmSender on the
@@ -34,7 +36,7 @@ public class ProtobufAlarmClient implements AlarmSender {
 	}
 
 	public void sendAlarm(final String msg, final String source) {
-		send(Alarm.newBuilder().setAlarm(msg).setSource(source).setAlways(false).build());
+		send(Alarm.newBuilder().setAlarm(msg).setSource(source).build());
 	}
 
 	public void sendAlarmAlways(final String msg, final String source) {
@@ -42,7 +44,7 @@ public class ProtobufAlarmClient implements AlarmSender {
 	}
 
 	public void sendAlarm(final String msg) {
-		send(Alarm.newBuilder().setAlarm(msg).setAlways(false).build());
+		send(Alarm.newBuilder().setAlarm(msg).build());
 	}
 
 	public void sendAlarmAlways(final String msg) {
@@ -55,6 +57,11 @@ public class ProtobufAlarmClient implements AlarmSender {
 		queue.execute(new AlarmTask(alarm));
 	}
 
+	@PreDestroy
+	public void close() {
+		queue.shutdown();
+	}
+
 	/** This is the private task that actually connects to the server to send the
 	 * alarm message. It keeps the socket open for up to 5 seconds, so that when
 	 * several alarms are sent consecutively, they all use the same connection. */
@@ -65,10 +72,14 @@ public class ProtobufAlarmClient implements AlarmSender {
 			try {
 				if (sock == null || !sock.isConnected() || System.currentTimeMillis() - lastWrite > 5000) {
 					if (sock != null) sock.close();
-					Socket sock = new Socket();
+					sock = new Socket();
 					sock.connect(endpoint, connectTimeout);
+					bout = new BufferedOutputStream(sock.getOutputStream());
 				}
-				alarm.writeDelimitedTo(sock.getOutputStream());
+				bout.write(255);
+				alarm.writeDelimitedTo(bout);
+				bout.flush();
+				lastWrite = System.currentTimeMillis();
 			} catch (IOException ex) {
 				log.error("Connecting to remote AlarmSender {}", endpoint, ex);
 			}
