@@ -1,0 +1,16 @@
+apply plugin:'java'
+apply plugin: ws.antonov.gradle.plugins.protobuf.ProtobufPlugin
+defaultTasks 'build'
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.4'
+	}
+}
+
+dependencies {
+	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', 'org.slf4j:slf4j-api:1.6.1'
+}
