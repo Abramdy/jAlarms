@@ -3,7 +3,7 @@ package com.solab.alarms;
 import java.io.*;
 import java.net.*;
 import java.util.concurrent.*;
-import javax.annotation.Resource;
+import javax.annotation.*;
 import org.slf4j.*;
 import com.solab.alarms.protobuf.AlarmProtos.Alarm;
 
@@ -36,10 +36,11 @@ public class ProtobufAlarmServer extends Thread {
 	/** Specifies the maximum number of threads that the internal thread pool
 	 * should allow. By default it is unbound. */
 	public void setMaxThreads(int value) {
-		((ThreadPoolExector)tpool).setMaximumPoolSize(value);
+		((ThreadPoolExecutor)tpool).setMaximumPoolSize(value);
 	}
 
 	public void run() {
+		log.trace("Listening on port {}", port);
 		try {
 			ServerSocket server = new ServerSocket(port);
 			while (true) {
@@ -63,26 +64,36 @@ public class ProtobufAlarmServer extends Thread {
 		public void run() {
 			try {
 				sock.setSoTimeout(5000);
-				while (true) {
-					Alarm alarm = Alarm.parseDelimitedFrom(sock.getInputStream());
-					if (alarm.getAlways()) {
-						sender.sendAlarmAlways(alarm.getAlarm(), alarm.hasSource() ? alarm.getSource() : null);
+				InputStream ins = sock.getInputStream();
+				boolean sigue = true;
+				while (sigue) {
+					int x = ins.read();
+					if (x == -1) {
+						sigue = false;
 					} else {
-						sender.sendAlarm(alarm.getAlarm(), alarm.hasSource() ? alarm.getSource() : null);
+						Alarm alarm = Alarm.parseDelimitedFrom(sock.getInputStream());
+						if (alarm.hasAlways() && alarm.getAlways()) {
+							sender.sendAlarmAlways(alarm.getAlarm(), alarm.hasSource() ? alarm.getSource() : null);
+						} else {
+							sender.sendAlarm(alarm.getAlarm(), alarm.hasSource() ? alarm.getSource() : null);
+						}
 					}
 				}
+			} catch (SocketTimeoutException ex) {
+				log.trace("Closing jAlarms protobuf client {}", sock.getRemoteSocketAddress());
 			} catch (SocketException ex) {
-				if (false/*ex is read timeout*/) {
-					log.trace("Closing jAlarms protobuf client {}", sock.getRemoteSocketAddress());
-				} else {
-					log.error("Receiving alarm messages from {}", sock.getRemoteSocketAddress(), ex);
-				}
+				log.error("Receiving alarm messages from {}", sock.getRemoteSocketAddress(), ex);
 			} catch (IOException ex) {
 				log.error("Receiving alarm messages from {}", sock.getRemoteSocketAddress(), ex);
 			} finally {
 				try { sock.close(); } catch (IOException ex) {}
 			}
 		}
+	}
+
+	@PreDestroy
+	public void close() {
+		tpool.shutdown();
 	}
 
 }
