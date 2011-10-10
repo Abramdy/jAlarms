@@ -1,6 +1,8 @@
-apply plugin:'java'
+apply plugin:'groovy'
 apply plugin: ws.antonov.gradle.plugins.protobuf.ProtobufPlugin
 defaultTasks 'build'
+sourceCompatibility=6
+targetCompatibility=6
 
 buildscript {
 	repositories {
@@ -12,5 +14,7 @@ buildscript {
 }
 
 dependencies {
-	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', 'org.slf4j:slf4j-api:1.6.1'
+	groovy 'org.codehaus.groovy:groovy:1.8.2'
+	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', 'org.slf4j:slf4j-api:1.6.1',
+		'org.springframework:spring-context-support:3.0.6.RELEASE'
 }
