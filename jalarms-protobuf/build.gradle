@@ -1,6 +1,7 @@
 apply plugin:'groovy'
 apply plugin: ws.antonov.gradle.plugins.protobuf.ProtobufPlugin
 defaultTasks 'build'
+description='This module provides a remote interface via Google Protocol Buffers, so that several clients can connect to a single application with an AlarmSender which send the alarm messages on behalf of the clients.'
 
 buildscript {
 	repositories {
@@ -14,5 +15,5 @@ buildscript {
 dependencies {
 	groovy 'org.codehaus.groovy:groovy:1.8.2'
 	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', 'org.slf4j:slf4j-api:1.6.1',
-		'org.springframework:spring-context-support:3.0.6.RELEASE'
+		"org.springframework:spring-context-support:${springVersion}"
 }
