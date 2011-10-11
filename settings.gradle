@@ -1,1 +1,3 @@
-include 'jalarms-core', 'jalarms-channels', 'jalarms-aop', 'jalarms-service', 'jalarms-protobuf'
+include 'jalarms-core', 'jalarms-channels', 'jalarms-aop'
+include 'jalarms-protobuf'
+//include 'jalarms-service'
