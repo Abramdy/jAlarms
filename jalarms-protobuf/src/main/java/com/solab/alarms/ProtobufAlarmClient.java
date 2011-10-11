@@ -57,6 +57,7 @@ public class ProtobufAlarmClient implements AlarmSender {
 		queue.execute(new AlarmTask(alarm));
 	}
 
+	/** Shuts down the alarm queue. */
 	@PreDestroy
 	public void close() {
 		queue.shutdown();

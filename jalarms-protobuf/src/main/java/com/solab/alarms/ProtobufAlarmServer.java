@@ -39,6 +39,8 @@ public class ProtobufAlarmServer extends Thread {
 		((ThreadPoolExecutor)tpool).setMaximumPoolSize(value);
 	}
 
+	/** Opens a ServerSocket on the specified port, and accepts incoming connections,
+	 * processing them in a thread pool. */
 	public void run() {
 		log.trace("Listening on port {}", port);
 		try {
@@ -67,6 +69,8 @@ public class ProtobufAlarmServer extends Thread {
 				InputStream ins = sock.getInputStream();
 				boolean sigue = true;
 				while (sigue) {
+					//We need to read this byte to detect the read timeout and
+					//also disconnections.
 					int x = ins.read();
 					if (x == -1) {
 						sigue = false;
@@ -91,6 +95,7 @@ public class ProtobufAlarmServer extends Thread {
 		}
 	}
 
+	/** Shuts down the thread pool. */
 	@PreDestroy
 	public void close() {
 		tpool.shutdown();

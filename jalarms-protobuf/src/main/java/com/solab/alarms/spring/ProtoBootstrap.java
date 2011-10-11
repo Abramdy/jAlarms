@@ -2,6 +2,8 @@ package com.solab.alarms.spring;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+/** This is just a bootstrap class for an app which accepts protobuf connections,
+ * configured via Spring. */
 public class ProtoBootstrap {
 
 	public static void main(String[] args) {
