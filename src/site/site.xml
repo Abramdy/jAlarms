@@ -22,6 +22,7 @@
 		<item name="Core API docs" href="core/apidocs/index.html" />
 		<item name="Channel API docs" href="channels/apidocs/index.html" />
 		<item name="AOP API docs" href="aop/apidocs/index.html" />
+		<item name="Protobuf API docs" href="protobuf/apidocs/index.html" />
 		<item name="Beginner's Guide" href="guide.html"/>
 		<item name="Alarm Channels" href="channels.html" />
 		<item name="Xmpp Channel" href="xmpp_channel.html" />
@@ -29,7 +30,7 @@
 		<item name="AOP &amp; Annotations" href="aop.html"/>
 		<item name="Message caching" href="cache.html" />
 		<item name="Alarm Buffering" href="buffer.html" />
-		<item name="Web application" href="webapp.html" />
+		<item name="Remote Alarm Service" href="protobuf.html" />
 		<item name="Download" href="http://sourceforge.net/projects/jalarms/files/jAlarms/" />
 		<item name="Español" href="/es/index.html" />
 	</menu>

@@ -10,16 +10,20 @@ jAlarms
   {{{core/apidocs/index.html}Javadoc reference}}, or go to the {{{http://sf.net/projects/jalarms}project page}}
   for downloads, submit bugs, etc.
 
-  <<IMPORTANT:>> Starting with 1.5.2, jAlarms has been split into three modules:
+  <<IMPORTANT:>> Starting with 1.6.0, jAlarms is composed of modules:
 
-  [core] This contains the core classes, along with some channels that have no external dependencies.
+  [core] This contains the core classes, along with some channels that have no external dependencies. This is usually the only module you need at development time.
 
   [channels] This contains channel implementations which need external dependencies, as well as other
   classes that have external dependencies (such as the memcached {{{cache.html}cache}}).
 
   [aop] This contains the classes and annotations needed to use jAlarms in an {{{aop.html}AOP}} manner.
 
+  [protobuf] This contains a couple of components to implement a remote alarm service in which clients send alarms to the server via {{{http://code.google.com/p/protobuf/}Protocol Buffers}} messages.
 []
+
+  An important change from jAlarms 1.5 is that AlarmSender is now an interface, and the class that implements it
+  is now called AlarmSenderImpl. This change will allow an AlarmSender to be published as a service via different means such as RMI or RPC.
 
 * Goal
 

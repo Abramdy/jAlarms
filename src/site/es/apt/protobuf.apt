@@ -1,0 +1,88 @@
+	-----
+	Servicio de alarmas remotas via Protocol Buffers
+	-----
+	Enrique Zamudio
+	-----
+
+  jAlarms incluye un módulo nuevo llamado jalarms-protobuf, que permite ejecutar una aplicación
+  que contenga un AlarmSender el cual esté disponible de manera remota para otras aplicaciones,
+  utilizando mensajería de {{{http://code.google.com/p/protobuf/}Protocol Buffers}}.
+
+En el servidor
+
+  Se necesita configurar una aplicación tipo servidor. Esta puede ser JEE o JSE; el módulo
+  protobuf incluye una clase para arrancar el servicio como aplicación JSE sin tener que
+  escribir una sola línea de código. Unicamente se tiene que configurar un application context
+  de Spring con el AlarmSender (y sus canales por supuesto), así como el ProtobufAlarmSender,
+  el cual debe tener identificador "main":
+
++-----
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:p="http://www.springframework.org/schema/p"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+<context:annotation-config/>
+
+<bean id="alarmSender" class="com.solab.alarms.AlarmSenderImpl">
+  <property name="alarmChannels"><list>
+    <bean class="com.solab.alarms.channels.TestChannel" />
+  </list></property>
+</bean>
+
+<bean id="main" class="com.solab.alarms.ProtobufAlarmServer">
+  <constructor-arg value="12345" />
+</bean>
+
+</beans>
++-----
+
+  El parámetro del constructor para el ProtobufAlarmServer es el puerto TCP en donde debe escuchar las conexiones entrantes.
+
+  Para arrancar la app hay que correr la clase com.solab.alarms.spring.ProtoBootstrap. El classpath debe incluir
+  las bibliotecas pertinentes de Spring, así como jalarms-core, jalarms-channels si se requiere, el API y una implementación de SLF4J,
+  y protobuf-2.4.1 o superior.
+
+  Si se desea ofrecer el servicio dentro de un contenedor JEE, hay que especificar en la definición del
+  ProtobufAlarmServer el atributo <<<init-method="start">>> para que comience a recibir conexiones
+  en cuanto se levante el application context. Es además recomendable en este caso indicar en el bean
+  que depende del AlarmSender, con el atributo <<<depends-on="alarmSender">>>.
+
+En el cliente
+
+  Una vez configurado el ProtobufAlarmSender, cualquier cantidad de clientes se pueden conectar a él. Lo
+  único que se necesita es usar un ProtobufAlarmClient en vez del tradicional AlarmSenderImpl. Este componente
+  implementa la interfaz AlarmSender, de modo que si los objetos de la aplicación cliente tienen referencias
+  a AlarmSender y se usa algún controlador de IoC, no es necesario modificar nada de código; basta con
+  sustituir el AlarmSenderImpl por un ProtobufAlarmClient y listo. Con Spring es algo así:
+
++-----
+<bean id="alarmSender" class="com.solab.alarms.ProtobufAlarmClient">
+  <constructor-arg value="127.0.0.1" />
+  <constructor-arg value="12345" />
+</bean>
++-----
+
+  Y si los componentes tienen referencias tipo <<<@Resource private AlarmSender sender;>>> entonces el ProtobufAlarmClient
+  será inyectado y las alarmas serán enviadas a través del AlarmSender remoto.
+
+Otros clientes
+
+  Se puede descargar el archivo alarm_protos.proto directamente del repositorio Git; se encuentra dentro de
+  jalarms-protobuf/src/main/proto. Esto sólo es necesario si se desea compilar un cliente de protobuf para
+  otro lenguaje, como Objective-C, Python, Perl, Ruby, etc. Esto permite a aplicaciones escritas
+  en otros lenguajes que utilicen el servicio remoto de alarmas, aunque es más sencillo desde lenguajes
+  de la JVM porque el ProtobufAlarmClient ya implementa la interfaz AlarmSender y además maneja toda la
+  comunicación de red.
+
+  Para implementar un cliente en otro lenguaje, hay que tomar en cuenta que por cada conexión que recibe el
+  servidor, ejecuta un ciclo en donde primero lee un solo byte y luego el mensaje Alarm de protobuf; el
+  byte se lee solamente para poder detectar un timeout en el socket, que se tiene configurado en 5 segundos.
+  Esto significa que una conexión puede enviar cualquier cantidad de alarmas en intervalos no mayores
+  a 5 segundos; después de 5 segundos de inactividad, el servidor cierra la conexión y a partir de ese momento,
+  cualquier otra alarma que el cliente quiera enviar, deberá hacerlo con una nueva conexión.
+  Esto evita que el servidor mantenga muchas conexiones abiertas que estarán casi siempre inactivas, pero
+  permite reutilizar la conexión del cliente en caso de que el cliente requiera enviar varias alarmas seguidas.
