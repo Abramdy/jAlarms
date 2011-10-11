@@ -18,4 +18,9 @@ class TestProtobuf {
 		assert parsed.hasAlways() && !parsed.always
 	}
 
+	@Test(expected=com.google.protobuf.UninitializedMessageException.class)
+	void testMandatory() {
+		Alarm.newBuilder().setSource("source").build()
+	}
+
 }
