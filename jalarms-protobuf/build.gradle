@@ -17,3 +17,5 @@ dependencies {
 	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', 'org.slf4j:slf4j-api:1.6.1',
 		"org.springframework:spring-context-support:${springVersion}"
 }
+
+tasks.jar.exclude('jalarms-protobuf.xml')
