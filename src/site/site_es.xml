@@ -14,7 +14,7 @@
 		<item name="Descargar" href="http://sourceforge.net/projects/jalarms/files/jAlarms/"/>
 	</links>
 
-	<menu name="jAlarms 1.5">
+	<menu name="jAlarms 1.6">
 		<item name="Introducción" href="index.html"/>
 		<item name="Documentación API Core" href="../core/apidocs/index.html" />
 		<item name="Documentación API canales" href="../channels/apidocs/index.html" />
