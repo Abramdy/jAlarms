@@ -78,8 +78,8 @@ subprojects { subproj->
 		repositories {
 			project.deployer=repositories.mavenDeployer {
 				beforeDeployment { MavenDeployment deployment ->
-					def signedPomArtifact=sign(deployment.pomArtifact).singleArtifact
-					signedPomArtifact.type="pom."+signing.type.extension
+					def signedPomArtifact=signPom(deployment)
+					//signedPomArtifact.type="pom."+signing.type.extension
 					deployment.addArtifact(signedPomArtifact)
 				}
 				repository(url:'http://oss.sonatype.org/service/local/staging/deploy/maven2/') {
