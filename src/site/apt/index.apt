@@ -7,7 +7,7 @@
 jAlarms
 
   Welcome to the {{{http://sf.net/projects/jalarms}jAlarms project}}. You can look at the
-  {{{core/apidocs/index.html}Javadoc reference}}, or go to the {{{http://sf.net/projects/jalarms}project page}}
+  {{{core/javadoc/index.html}Javadoc reference}}, or go to the {{{http://sf.net/projects/jalarms}project page}}
   for downloads, submit bugs, etc.
 
   <<IMPORTANT:>> Starting with 1.6.0, jAlarms is composed of modules:

@@ -19,10 +19,10 @@
 
 	<menu name="jAlarms 1.6">
 		<item name="Introduction" href="index.html"/>
-		<item name="Core API docs" href="core/apidocs/index.html" />
-		<item name="Channel API docs" href="channels/apidocs/index.html" />
-		<item name="AOP API docs" href="aop/apidocs/index.html" />
-		<item name="Protobuf API docs" href="protobuf/apidocs/index.html" />
+		<item name="Core API docs" href="core/javadoc/index.html" />
+		<item name="Channel API docs" href="channels/javadoc/index.html" />
+		<item name="AOP API docs" href="aop/javadoc/index.html" />
+		<item name="Protobuf API docs" href="protobuf/javadoc/index.html" />
 		<item name="Beginner's Guide" href="guide.html"/>
 		<item name="Alarm Channels" href="channels.html" />
 		<item name="Xmpp Channel" href="xmpp_channel.html" />

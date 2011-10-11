@@ -7,7 +7,7 @@
 jAlarms
 
   Bienvenido al proyecto {{{http://sf.net/projects/jalarms}jAlarms}}. Puedes ver la referencia de
-  {{{../core/apidocs/index.html}Javadoc}}, o ir a la {{{http://sf.net/projects/jalarms}página del proyecto}}
+  {{{../core/javadoc/index.html}Javadoc}}, o ir a la {{{http://sf.net/projects/jalarms}página del proyecto}}
   para descargar, notificar algún defecto, etc.
 
   <<IMPORTANTE:>> A partir de la versión 1.5.2, jAlarms se divide en 3 módulos:
