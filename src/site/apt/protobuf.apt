@@ -1,8 +1,10 @@
 	-----
-	Remote Alarm Service via Protocol Buffers
+	Remote Alarm Service
 	-----
 	Enrique Zamudio
 	-----
+
+Remote Alarm Service
 
   jAlarms includes a module, jalarms-protobuf, which allows you to run a service containing
   a configured AlarmSender implementation, which can be used remotely by a number of clients,

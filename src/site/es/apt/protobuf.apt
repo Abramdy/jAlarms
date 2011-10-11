@@ -1,8 +1,10 @@
 	-----
-	Servicio de alarmas remotas via Protocol Buffers
+	Servicio de alarmas remotas
 	-----
 	Enrique Zamudio
 	-----
+
+Servicio de alarmas remotas
 
   jAlarms incluye un módulo nuevo llamado jalarms-protobuf, que permite ejecutar una aplicación
   que contenga un AlarmSender el cual esté disponible de manera remota para otras aplicaciones,
