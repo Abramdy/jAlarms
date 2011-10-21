@@ -71,8 +71,6 @@ subprojects { subproj->
 	signing {
 		sign configurations.archives
 	}
-	deployUsernameProperty = "nexusUsername"
-	deployPasswordProperty = "nexusPassword"
 
 	uploadPublished {
 		repositories {
