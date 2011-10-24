@@ -21,12 +21,18 @@ public class ProtobufAlarmServer extends Thread {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	private final int port;
+	private boolean local;
 	private @Resource AlarmSender sender;
 	private final ExecutorService tpool = Executors.newCachedThreadPool();
 
 	/** Creates a new instance which listens on the specified TCP port. */
 	public ProtobufAlarmServer(int tcpPort) {
+		this(tcpPort, false);
+	}
+
+	public ProtobufAlarmServer(int tcpPort, boolean local) {
 		port = tcpPort;
+		this.local = local;
 		setName("jalarms-protobuf");
 	}
 
@@ -44,7 +50,12 @@ public class ProtobufAlarmServer extends Thread {
 	public void run() {
 		log.trace("Listening on port {}", port);
 		try {
-			ServerSocket server = new ServerSocket(port);
+			ServerSocket server = new ServerSocket();
+			if (local) {
+				server.bind(new InetSocketAddress("localhost", port));
+			} else {
+				server.bind(new InetSocketAddress(port));
+			}
 			while (true) {
 				Socket sock = server.accept();
 				tpool.execute(new AlarmListener(sock));
