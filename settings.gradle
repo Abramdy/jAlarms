@@ -1,3 +1,4 @@
 include 'jalarms-core', 'jalarms-channels', 'jalarms-aop'
 include 'jalarms-protobuf'
+include 'jalarms-scala'
 //include 'jalarms-service'
