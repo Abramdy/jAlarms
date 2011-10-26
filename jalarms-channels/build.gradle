@@ -3,8 +3,8 @@ defaultTasks 'build'
 
 //We need additional repos here
 repositories {
-	mavenRepo name:'jml-repo', urls:['http://java-jml.sourceforge.net/maven']
-	mavenRepo name:'spy', urls:['http://bleu.west.spy.net/~dustin/m2repo']
+	mavenRepo name:'jml-repo', url:'http://java-jml.sourceforge.net/maven'
+	mavenRepo name:'spy', url:'http://bleu.west.spy.net/~dustin/m2repo'
 }
 
 dependencies {
