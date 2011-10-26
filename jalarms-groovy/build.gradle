@@ -1,0 +1,8 @@
+apply plugin:'groovy'
+defaultTasks 'build'
+description='Extensions to the AlarmSender interface for use within Groovy'
+
+dependencies {
+	groovy "org.codehaus.groovy:groovy:${groovyVersion}"
+	compile project(':jalarms-core'), project(':jalarms-protobuf')
+}
