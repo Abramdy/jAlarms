@@ -35,6 +35,7 @@ class TestBindings {
 	def testNoAlarm() {
 		sender.withAlarm("You should never read this") {
 			println("won't fail this time")
+			true
 		}
 	}
 
