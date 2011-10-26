@@ -20,8 +20,14 @@ class ScalarmSender(sender:AlarmSender) {
 		}
 	}
 
-	def withAlarm(alarm:String)(f: => Unit) {
-		withAlarm(alarm, null)(f)
+	def withAlarm(alarm:String)(body: => Unit) {
+		try {
+			body
+		} catch {
+			case e =>
+				sender sendAlarm alarm
+				throw e
+		}
 	}
 
 }
