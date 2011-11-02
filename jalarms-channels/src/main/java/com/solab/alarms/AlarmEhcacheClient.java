@@ -2,9 +2,11 @@ package com.solab.alarms;
 
 import javax.annotation.*;
 
+import com.solab.util.AlarmHash;
 import org.slf4j.LoggerFactory;
-
 import net.sf.ehcache.*;
+
+import java.net.URL;
 
 /** An alarm cache that uses ehcache to store the data it needs to know if an alarm message should be
  * resent. This is useful in environments where you have several applications which can be using similar
@@ -22,13 +24,15 @@ public class AlarmEhcacheClient implements AlarmCache {
 	private String configPath = "/jalarms_ehcache.xml";
 	private String cacheName = "jalarms";
 
-	/** Sets the path of the config file, located in the classpath. Default is "/jalarms_ehcache.xml". */
+	/** Sets the path of the config file, located in the classpath. Default is "/jalarms_ehcache.xml".
+     * @param path The absolute path inside the classpath for the ehcache config. */
 	public void setConfigPath(String path) {
 		configPath = path;
 	}
 	public String getConfigPath() { return configPath; }
 
-	/** Sets the name of the cache to use. Default is "jalarms". */
+	/** Sets the name of the cache to use. Default is "jalarms".
+     * @param name The name of the cache to use. */
 	public void setCacheName(String name) {
 		cacheName = name;
 	}
@@ -36,22 +40,56 @@ public class AlarmEhcacheClient implements AlarmCache {
 
 	@PostConstruct
 	public void init() {
-		cacheman = CacheManager.create(getClass().getResource(configPath));
+        URL url = getClass().getClassLoader().getResource(configPath);
+        if (url == null) {
+        	url = Thread.currentThread().getContextClassLoader().getResource(configPath);
+        	if (url == null) {
+        		url = ClassLoader.getSystemResource(configPath);
+        		if (url == null) {
+        			throw new IllegalArgumentException(String.format("AlarmEhcacheClient couldn't find %s anywhere", configPath));
+        		}
+        	}
+        }
+		cacheman = CacheManager.create(url);
 		cache = cacheman.getEhcache("jalarms");
 	}
 
     @Override
     public void store(AlarmChannel channel, String source, String message) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        if (cache == null) {
+            synchronized (this) {
+                if (cache == null) {
+                    init();
+                }
+            }
+        }
+        String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
+            AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
+                source == null ? "" : source, AlarmHash.hash(message));
+        //We don't care about the actual value, just that the key exists
+        cache.put(new Element(k, "y"));
     }
 
     @Override
     public boolean shouldResend(AlarmChannel channel, String source, String message) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if (cache == null) {
+            return true;
+        }
+        String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
+            AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
+                source == null ? "" : source, AlarmHash.hash(message));
+        //If the entry exists, don't resend
+        try {
+            return cache.get(k) == null;
+        } catch (CacheException ex) {
+            log.error("Retrieving key {} from ehcache", k, ex.getCause() == null ? ex : ex.getCause());
+        }
+        return true;
     }
 
     @Override
     public void shutdown() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        cacheman.shutdown();
     }
+
 }
