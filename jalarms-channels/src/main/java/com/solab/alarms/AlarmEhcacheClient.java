@@ -40,18 +40,18 @@ public class AlarmEhcacheClient implements AlarmCache {
 
 	@PostConstruct
 	public void init() {
-        URL url = getClass().getClassLoader().getResource(configPath);
+        URL url = getClass().getClassLoader().getResource(getConfigPath());
         if (url == null) {
-        	url = Thread.currentThread().getContextClassLoader().getResource(configPath);
+        	url = Thread.currentThread().getContextClassLoader().getResource(getConfigPath());
         	if (url == null) {
-        		url = ClassLoader.getSystemResource(configPath);
+        		url = ClassLoader.getSystemResource(getConfigPath());
         		if (url == null) {
-        			throw new IllegalArgumentException(String.format("AlarmEhcacheClient couldn't find %s anywhere", configPath));
+        			throw new IllegalArgumentException(String.format("AlarmEhcacheClient couldn't find %s anywhere", getConfigPath()));
         		}
         	}
         }
 		cacheman = CacheManager.create(url);
-		cache = cacheman.getEhcache("jalarms");
+		cache = cacheman.getEhcache(getCacheName());
 	}
 
     @Override
@@ -67,7 +67,8 @@ public class AlarmEhcacheClient implements AlarmCache {
             AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
                 source == null ? "" : source, AlarmHash.hash(message));
         //We don't care about the actual value, just that the key exists
-        cache.put(new Element(k, "y"));
+        int secs = channel.getMinResendInterval() / 1000;
+        cache.put(new Element(k, "y", false, secs, secs));
     }
 
     @Override
