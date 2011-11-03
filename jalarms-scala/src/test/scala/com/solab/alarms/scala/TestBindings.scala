@@ -6,12 +6,14 @@ import com.solab.alarms.AlarmSenderImpl
 import com.solab.alarms.channels.TestChannel
 import org.junit._
 
+/** Test that the withAlarm functions work as expected. */
 class TestBindings {
 
 	val sender = new AlarmSenderImpl
 
 	@Before
 	def init() {
+		//Add a test channel to the alarm sender.
 		sender.setAlarmChannels(List(new TestChannel))
 	}
 

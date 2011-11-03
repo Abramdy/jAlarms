@@ -2,6 +2,10 @@ package com.solab.alarms.scala
 
 import com.solab.alarms.AlarmSender
 
+/*
+The "bindings" object offers an implicit conversion to create a ScalarmSender containing an AlarmSender, so that the "withAlarm" functions
+can be easily used within Scala code.
+*/
 object bindings {
 
 	implicit def bindAlarmSender(sender:AlarmSender) = new ScalarmSender(sender)
