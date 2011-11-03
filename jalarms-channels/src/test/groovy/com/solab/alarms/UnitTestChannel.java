@@ -1,7 +1,7 @@
 package com.solab.alarms;
 
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +12,14 @@ import org.slf4j.LoggerFactory;
  */
 public class UnitTestChannel implements AlarmChannel {
 
-	private static volatile int instanceCount;
-	private Logger log = LoggerFactory.getLogger(String.format("Test-%d", ++instanceCount));
+	private static final AtomicInteger instanceCount = new AtomicInteger();
+    public final int chanNum = instanceCount.incrementAndGet();
+	private final Logger log = LoggerFactory.getLogger(String.format("TestChan%d", chanNum));
 	long stamp;
 	long lastSent;
 	int resend = 5000;
 	ChanDelegate delegate;
-	AtomicBoolean sent = new AtomicBoolean();
+	final AtomicBoolean sent = new AtomicBoolean();
 
 	@Override
 	public void send(String msg, String source) {
@@ -72,4 +73,7 @@ public class UnitTestChannel implements AlarmChannel {
 		public void alarmReceived(String msg, long when);
 	}
 
+    public String getName() {
+        return String.format("TestChan%d", chanNum);
+    }
 }
