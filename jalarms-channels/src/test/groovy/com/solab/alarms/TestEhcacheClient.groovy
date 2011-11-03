@@ -48,13 +48,13 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
     @Test
     void testCache() {
         if (cache == null) {
-            log.info("Skipping cache test");
-            return;
+            log.info("Skipping cache test")
+            return
         }
-        log.info("${chan1.name} resends every ${chan1.resend} millis, ${chan2.name} resends every ${chan2.resend} millis")
+        log.info "${chan1.name} resends every ${chan1.resend} millis, ${chan2.name} resends every ${chan2.resend} millis"
 
         //First, check that msg1 is sent through both channels
-        log.info("Sending msg1 which should be sent immediately")
+        log.info "Sending msg1 which should be sent immediately"
         chan1.prepare()
         chan2.prepare()
         sender.sendAlarm("msg1", "src1")
@@ -93,7 +93,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         //Wait
         log.info("waiting #2: {} millis {}", w1, String.format("%TT", new Date()))
         Thread.sleep(w1)
-        log.info("msg1 should be sent through ${chan1.name}, ignored by ${chan2.name}")
+        log.info "msg1 should be sent through ${chan1.name}, ignored by ${chan2.name}"
         ls2 = chan2.lastSent
         chan1.prepare()
         chan2.prepare()
@@ -121,7 +121,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         //Wait
         log.info("waiting #3: {} millis {}", w1, String.format("%TT", new Date()))
         Thread.sleep(w1)
-        log.info("msg1 should be sent through ${chan2.name}, ignored by ${chan1.name}")
+        log.info "msg1 should be sent through ${chan2.name}, ignored by ${chan1.name}"
         chan1.prepare()
         chan2.prepare()
         sender.sendAlarm("msg1", "src1")
@@ -150,7 +150,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         log.info("waiting #4: {} millis {}", w1, String.format("%TT", new Date()))
         Thread.sleep(w1)
 
-        log.info("msg1 should be sent through ${chan1.name}, ignored by ${chan2.name}")
+        log.info "msg1 should be sent through ${chan1.name}, ignored by ${chan2.name}"
         chan1.prepare()
         chan2.prepare()
         sender.sendAlarm("msg1", "src1")
@@ -162,7 +162,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         //chan2 should have not sent anything
         assert !chan2.sent.get() && chan2.lastSent == ls2
 
-        log.info("msg2 should be sent through ${chan1.name}, ignored by ${chan2.name}")
+        log.info "msg2 should be sent through ${chan1.name}, ignored by ${chan2.name}"
         chan1.prepare()
         chan2.prepare()
         ls2 = chan2.lastSent
@@ -187,7 +187,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         assert !chan1.sent.get() && !chan2.sent.get()
         assert chan1.lastSent == ls1 && chan2.lastSent == ls2
 
-        log.info("msg2 should be sent through ${chan2.name}, ignored by ${chan1.name}")
+        log.info "msg2 should be sent through ${chan2.name}, ignored by ${chan1.name}"
         chan1.prepare()
         chan2.prepare()
         ls1 = chan1.lastSent
@@ -202,7 +202,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         //Wait
         log.info("waiting #6: {} millis {}", w1, String.format("%TT", new Date()))
         Thread.sleep(w1)
-        log.info("Sending msg1 through both")
+        log.info "Sending msg1 through both"
         chan1.prepare()
         chan2.prepare()
         sender.sendAlarm("msg1", "src1")
@@ -214,7 +214,7 @@ class TestEhcacheClient implements UnitTestChannel.ChanDelegate {
         ls2 = chan2.lastSent
         assert ls1 - chan1.stamp > 0 && ls1 - chan1.stamp < 1000
         assert ls2 - chan2.stamp > 0 && ls2 - chan2.stamp < 1000
-        log.info("msg2 should be sent through ${chan1.name}, ignored by ${chan2.name}")
+        log.info "msg2 should be sent through ${chan1.name}, ignored by ${chan2.name}"
         chan1.prepare()
         chan2.prepare()
         ls2 = chan2.lastSent
