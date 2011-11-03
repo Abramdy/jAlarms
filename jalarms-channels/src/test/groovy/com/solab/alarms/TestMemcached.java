@@ -45,9 +45,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 			} else {
 				String[] s2 = slist.split(",");
 				ArrayList<String> s3 = new ArrayList<String>(s2.length);
-				for (String s : s2) {
-					s3.add(s);
-				}
+                Collections.addAll(s3, s2);
 				mc.setServers(s3);
 			}
 			mc.init();
