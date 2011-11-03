@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-	groovy 'org.codehaus.groovy:groovy:1.8.3'
+	groovy "org.codehaus.groovy:groovy:${groovyVersion}"
 	compile 'net.sourceforge.java-jml:jml:1.0b4', 'spy:memcached:2.5',
 		'com.adenki:smppapi:0.3.9', 'javax.mail:mail:1.4.1',
 		"org.springframework:spring-context-support:${springVersion}",
