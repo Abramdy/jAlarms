@@ -23,6 +23,17 @@ public class AlarmEhcacheClient implements AlarmCache {
 	private Ehcache cache;
 	private String configPath = "/jalarms_ehcache.xml";
 	private String cacheName = "jalarms";
+    private int defint = 120;
+
+    /** Sets the default resend interval, for storing alarms unrelated to a specific channel,
+     * in seconds. Default is 2 minutes.
+     * @param value The number of seconds after which alarms with no specific channel expire. */
+    public void setDefaultInterval(int value) {
+        defint = value;
+    }
+    public int getDefaultInterval() {
+        return defint;
+    }
 
 	/** Sets the path of the config file, located in the classpath. Default is "/jalarms_ehcache.xml".
      * @param path The absolute path inside the classpath for the ehcache config. */
@@ -67,7 +78,7 @@ public class AlarmEhcacheClient implements AlarmCache {
             AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
                 source == null ? "" : source, AlarmHash.hash(message));
         //We don't care about the actual value, just that the key exists
-        int secs = channel.getMinResendInterval() / 1000;
+        int secs = channel == null ? defint : (channel.getMinResendInterval() / 1000);
         cache.put(new Element(k, "y", false, secs, secs));
     }
 
