@@ -53,7 +53,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 			mc.init();
 			return mc;
 		} catch (IOException ex) {
-			System.out.println("No memcached available, skipping test");
+			log.warn("No memcached available, skipping test");
 			mc = null;
 			return null;
 		}
@@ -75,10 +75,11 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 	@Test
 	public void testCache() {
 		if (mc == null) {
-			log.info("Skipping cache test");
+			log.info("Skipping memcached test");
 			return;
 		}
-		log.info("Chan1 resends every {} millis, Chan2 resends every {} millis", chan1.resend, chan2.resend);
+		log.info("{} resends every {} millis, {} resends every {} millis",
+                new Object[]{ chan1.getName(), chan1.resend, chan2.getName(), chan2.resend });
 
 		//First, check that msg1 is sent through both channels
 		log.info("Sending msg1 which should be sent immediately");
@@ -120,7 +121,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		//Wait
 		log.info("waiting #2: {} millis {}", w1, String.format("%TT", new Date()));
 		try { Thread.sleep(w1); } catch (InterruptedException ex) {}
-		log.info("msg1 should be sent through chan1, ignored by chan2");
+		log.info("msg1 should be sent through {}, ignored by {}", chan1.getName(), chan2.getName());
 		ls2 = chan2.lastSent;
 		chan1.prepare();
 		chan2.prepare();
@@ -148,7 +149,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		//Wait
 		log.info("waiting #3: {} millis {}", w1, String.format("%TT", new Date()));
 		try { Thread.sleep(w1); } catch (InterruptedException ex) {}
-		log.info("msg1 should be sent through chan2, ignored by chan1");
+		log.info("msg1 should be sent through {}, ignored by {}", chan2.getName(), chan1.getName());
 		chan1.prepare();
 		chan2.prepare();
 		sender.sendAlarm("msg1", "src1");
@@ -177,7 +178,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		log.info("waiting #4: {} millis {}", w1, String.format("%TT", new Date()));
 		try { Thread.sleep(w1); } catch (InterruptedException ex) {}
 
-		log.info("msg1 should be sent through chan1, ignored by chan2");
+		log.info("msg1 should be sent through {}, ignored by {}", chan1.getName(), chan2.getName());
 		chan1.prepare();
 		chan2.prepare();
 		sender.sendAlarm("msg1", "src1");
@@ -189,7 +190,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		//chan2 should have not sent anything
 		assert !chan2.sent.get() && chan2.lastSent == ls2;
 
-		log.info("msg2 should be sent through chan1, ignored by chan2");
+		log.info("msg2 should be sent through {}, ignored by {}", chan1.getName(), chan2.getName());
 		chan1.prepare();
 		chan2.prepare();
 		ls2 = chan2.lastSent;
@@ -214,7 +215,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		assert !chan1.sent.get() && !chan2.sent.get();
 		assert chan1.lastSent == ls1 && chan2.lastSent == ls2;
 
-		log.info("msg2 should be sent through chan2, ignored by chan1");
+		log.info("msg2 should be sent through {}, ignored by {}", chan2.getName(), chan1.getName());
 		chan1.prepare();
 		chan2.prepare();
 		ls1 = chan1.lastSent;
@@ -241,7 +242,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		ls2 = chan2.lastSent;
 		assert ls1 - chan1.stamp > 0 && ls1 - chan1.stamp < 1000;
 		assert ls2 - chan2.stamp > 0 && ls2 - chan2.stamp < 1000;
-		log.info("msg2 should be sent through chan1, ignored by chan2");
+		log.info("msg2 should be sent through {}, ignored by {}", chan1.getName(), chan2.getName());
 		chan1.prepare();
 		chan2.prepare();
 		ls2 = chan2.lastSent;
