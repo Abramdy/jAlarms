@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" name="testCaches"
+		updateCheck="false" monitoring="off"
+			dynamicConfig="true">
+
+	<cache name="jalarms_test" maxElementsInMemory="1024" maxElementsOnDisk="0"
+		eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LRU"
+		transactionalMode="off" statistics="false" />
+
+</ehcache>
+
