@@ -49,6 +49,10 @@
       </setting>
     </setting>
   </component>
+  <component name="HighlightingAdvisor">
+    <option name="SUGGEST_TYPE_AWARE_HIGHLIGHTING" value="false" />
+    <option name="TYPE_AWARE_HIGHLIGHTING_ENABLED" value="true" />
+  </component>
   <component name="InspectionProjectProfileManager">
     <profiles>
       <profile version="1.0" is_locked="false">
@@ -213,7 +217,9 @@
       <module fileurl="file://$PROJECT_DIR$/jalarms-aop/jalarms-aop.iml" filepath="$PROJECT_DIR$/jalarms-aop/jalarms-aop.iml" />
       <module fileurl="file://$PROJECT_DIR$/jalarms-channels/jalarms-channels.iml" filepath="$PROJECT_DIR$/jalarms-channels/jalarms-channels.iml" />
       <module fileurl="file://$PROJECT_DIR$/jalarms-core/jalarms-core.iml" filepath="$PROJECT_DIR$/jalarms-core/jalarms-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-groovy/jalarms-groovy.iml" filepath="$PROJECT_DIR$/jalarms-groovy/jalarms-groovy.iml" />
       <module fileurl="file://$PROJECT_DIR$/jalarms-remote/jalarms-remote.iml" filepath="$PROJECT_DIR$/jalarms-remote/jalarms-remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-scala/jalarms-scala.iml" filepath="$PROJECT_DIR$/jalarms-scala/jalarms-scala.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
@@ -224,6 +230,8 @@
   </component>
   <component name="ScalacSettings">
     <option name="SCALAC_BEFORE" value="false" />
+    <option name="COMPILER_LIBRARY_NAME" value="Scala" />
+    <option name="COMPILER_LIBRARY_LEVEL" value="Global" />
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
