@@ -2,6 +2,7 @@ package com.solab.alarms.remote;
 
 import java.io.*;
 import java.net.*;
+import javax.annotation.PreDestroy;
 
 /** A very simple remote alarm listener. It reads a text line from a socket and sends an alarm with that message.
  * A line can contain an alarm source, by starting with the source name, separated from the message with a double colon,
@@ -13,6 +14,7 @@ public class TextSocketListener extends AbstractAlarmListener {
 
 	private final int port;
     private int readTimeout = 2000;
+	private ServerSocket server;
 
 	public TextSocketListener(int tcpPort) {
 		port = tcpPort;
@@ -24,7 +26,7 @@ public class TextSocketListener extends AbstractAlarmListener {
 
 	public void run() {
 		try {
-			ServerSocket server = new ServerSocket(port);
+			server = new ServerSocket(port);
 			while (true) {
 				Socket sock = server.accept();
                 sock.setSoTimeout(readTimeout);
@@ -33,6 +35,14 @@ public class TextSocketListener extends AbstractAlarmListener {
 		} catch (IOException ex) {
             log.error("Receiving connection", ex);
 		}
+	}
+
+	@PreDestroy
+	public void shutdown() {
+		tpool.shutdown();
+		try {
+			server.close();
+		} catch (IOException ex) { /*Nothing left to do*/ }
 	}
 
     private final class SockReader implements Runnable {
@@ -53,14 +63,14 @@ public class TextSocketListener extends AbstractAlarmListener {
                         getAlarmSender().sendAlarm(line);
                     }
                 }
+				socket.getOutputStream().write("OK\r\n".getBytes());
+				socket.getOutputStream().flush();
             } catch (IOException e) {
                 log.error("Reading text line from socket", e);
             } finally {
                 try {
                     socket.close();
-                } catch (IOException e) {
-                    //Nothing left to do
-                }
+                } catch (IOException e) { /* Nothing left to do */ }
             }
         }
     }

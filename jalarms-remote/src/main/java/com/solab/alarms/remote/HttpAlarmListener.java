@@ -1,5 +1,7 @@
 package com.solab.alarms.remote;
 
+import javax.annotation.PreDestroy;
+
 /** A very simple remote alarm listener that dispatches HTTP requests.
  *
  * @author Enrique Zamudio
@@ -13,6 +15,11 @@ public class HttpAlarmListener extends AbstractAlarmListener {
 	}
 
 	public void run() {
+	}
+
+	@PreDestroy
+	public void shutdown() {
+		tpool.shutdown();
 	}
 
 }
