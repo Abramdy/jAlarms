@@ -42,7 +42,13 @@ public abstract class AbstractAlarmListener implements Runnable {
 
 	/** Starts a thread with itself as the target. */
 	public void startListening() {
+		if (sender == null) {
+			throw new IllegalStateException("AlarmSender has not been set, no point in starting server");
+		}
 		new Thread(this, getClass().getSimpleName()).start();
 	}
+
+	/** Command the received to stop listening for incoming requests. Implementations should invoke shutdown on the thread pool as well. */
+	public abstract void shutdown();
 
 }
