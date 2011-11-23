@@ -1,19 +1,25 @@
 package com.solab.alarms.remote;
 
 import com.solab.alarms.AlarmSender;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /** A base class for remote alarm listeners. Holds a reference to an AlarmSender, and a property to specify if it should autostart. The subclasses
  * must implement the run() method, to start receiving connections and sending the alarms that are requested through them; this method will be called
  * from its own dedicated thread so it can be a simple infinite loop.
+ * This class provides a cached ThreadPool so that subclasses can queue tasks to dispatch incoming requests.
  *
  * @author Enrique Zamudio
  */
 public abstract class AbstractAlarmListener implements Runnable {
 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
+    protected final ExecutorService tpool = Executors.newCachedThreadPool();
 
 	@Resource private AlarmSender sender;
 	private boolean autostart = true;
