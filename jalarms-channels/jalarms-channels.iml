@@ -68,15 +68,6 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/jars/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-test/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-test-3.0.6.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -129,6 +120,7 @@
       </library>
     </orderEntry>
     <orderEntry type="library" scope="TEST" name="Groovy 1.8" level="application" />
+    <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
   </component>
 </module>
 

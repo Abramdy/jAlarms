@@ -14,25 +14,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-3/org.aspectj/aspectjrt/c12498cf18507aa6433a94eb7d3e77d5/jars/aspectjrt-1.6.11.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-3/junit/junit/c12498cf18507aa6433a94eb7d3e77d5/jars/junit-4.10.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" scope="TEST">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-3/org.springframework/spring-test/e00f8bcd278158cfcf079809be51a634/jars/spring-test-3.1.0.RC1.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.aspectj/aspectjrt/c12498cf18507aa6433a94eb7d3e77d5/jars/aspectjrt-1.6.11.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -41,12 +23,22 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-3/org.springframework/spring-context-support/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-context-support-3.0.6.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-context-support/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-context-support-3.0.6.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" scope="TEST">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-test/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-test-3.0.6.RELEASE.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
   </component>
 </module>
 
