@@ -4,4 +4,5 @@ dependencies {
 	groovy "org.codehaus.groovy:groovy-all:${groovyVersion}"
 	compile project(':jalarms-core')
 	testCompile 'org.spockframework:spock-spring:0.5-groovy-1.8'
+	testRuntime "org.springframework:spring-test:${springVersion}"
 }
