@@ -36,7 +36,8 @@ public class HttpAlarmListener extends AbstractAlarmListener implements ChannelP
 
 	@PreDestroy
 	public void shutdown() {
-		tpool.shutdown();
+        //This includes the tpool.shutdown
+        bootstrap.releaseExternalResources();
 	}
 
     @Override
