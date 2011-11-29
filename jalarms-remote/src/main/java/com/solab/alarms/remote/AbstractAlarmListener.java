@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /** A base class for remote alarm listeners. Holds a reference to an AlarmSender, and a property to specify if it should autostart. The subclasses
  * must implement the run() method, to start receiving connections and sending the alarms that are requested through them; this method will be called
@@ -35,6 +36,7 @@ public abstract class AbstractAlarmListener implements Runnable {
 	 * otherwise does nothing. */
 	@PostConstruct
 	public void init() {
+        ((ThreadPoolExecutor)tpool).setMaximumPoolSize(Runtime.getRuntime().availableProcessors()*2);
 		if (autostart) {
 			startListening();
 		}
