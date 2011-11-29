@@ -45,6 +45,10 @@ public class TextSocketListener extends AbstractAlarmListener {
 		} catch (IOException ex) { /*Nothing left to do*/ }
 	}
 
+    /** A runnable that reads a line of text from a socket and sends it as an alarm.
+     *
+     * @author Enrique Zamudio
+     */
     private final class SockReader implements Runnable {
         private final Socket socket;
         private SockReader(Socket s) { socket = s; }
