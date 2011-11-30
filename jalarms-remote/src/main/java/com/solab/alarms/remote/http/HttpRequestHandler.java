@@ -19,8 +19,8 @@ import java.util.Map;
  */
 public class HttpRequestHandler extends SimpleChannelUpstreamHandler {
 
-    private static final String okResp = "OK";
-    private static final String emptyResp = "You must send 'alarm' and optionally 'src' in the query string of the URL";
+    public static final String okResp = "OK";
+    public static final String emptyResp = "You must send 'alarm' and optionally 'src' in the query string of the URL";
     private final AlarmSender sender;
 
     public HttpRequestHandler(AlarmSender sender) {
