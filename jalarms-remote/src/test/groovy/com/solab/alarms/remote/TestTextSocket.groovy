@@ -8,14 +8,14 @@ import spock.lang.*
 
 /** Unit tests for the TextSocketListener.
  *
- * @author Enrique Zamudio */
+ * @author Enrique Zamudio
+ */
 class TestTextSocket extends Specification {
 
-	@Shared AlarmSenderImpl sender = new AlarmSenderImpl()
+	@Shared AlarmSenderImpl sender = new AlarmSenderImpl(alarmChannels:[ new TestChannel() ])
 	@Shared TextSocketListener server = new TextSocketListener(65000)
 
 	void setupSpec() {
-		sender.alarmChannels = [ new TestChannel() ]
 		server.alarmSender = sender
 		server.startListening()
 	}
