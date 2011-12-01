@@ -20,6 +20,12 @@ jAlarms
   [aop] This contains the classes and annotations needed to use jAlarms in an {{{aop.html}AOP}} manner.
 
   [protobuf] This contains a couple of components to implement a remote alarm service in which clients send alarms to the server via {{{http://code.google.com/p/protobuf/}Protocol Buffers}} messages.
+
+  [remote] This contains components that can listen to incoming connections for different protocols, to receive alarm requests and send them via a configured AlarmSender.
+
+  [groovy] This contains a component that adds new methods to an AlarmSender at runtime, to send an alarm if an exception is thrown within a closure in Groovy.
+
+  [scala] This adds new methods to an AlarmSender that send an alarm if an exception is thrown inside a closure in Scala.
 []
 
   An important change from jAlarms 1.5 is that AlarmSender is now an interface, and the class that implements it

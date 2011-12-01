@@ -19,6 +19,13 @@ jAlarms
 
   [aop] Contiene las clases y anotaciones necesarias para usar jAlarms en modo {{{aop.html}orientado a aspectos}}.
 
+  [protobuf] Contiene un par de componentes que implementan un servicio para envío remoto de alarmas, usando mensajes de {{{http://code.google.com/p/protobuf/}Protocol Buffers}}.
+
+  [remote] Contiene components que pueden escuchar en puertos TCP para manejar distintos protocolos y recibir alarmas de manera remota, y enviarlas a un AlarmSender previamente configurado.
+
+  [groovy] Contiene un componente que agrega métodos a un AlarmSender en tiempo de ejecución, para poder enviar una alarma si se arroja una excepción dentro de un <closure>.
+
+  [scala] Agrega nuevos métodos a un AlarmSender para poder enviar una alarma en caso de que se arroje una excepción dentro de un <closure>.
 []
 
 * Objetivo

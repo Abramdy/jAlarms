@@ -18,10 +18,12 @@ Alarm Caching
 
 * Configuration
 
-  jAlarms includes two caching mechanisms. The default one is used transparently if you don't configure one
+  jAlarms includes three caching mechanisms. The default one is used transparently if you don't configure one
   explicitly and it only consists of a Map which stores the last time each message is sent. This is very simple
   and doesn't use a lot of memory; if your application sends 100 different alarm messages, then the cache will
   have at most 100 keys in memory, each one storing a Long.
+
+  The other two mechanisms use (or at least can use) external storage which can be shared among several applications. One is memcached, the other one is ehcache.
 
 * memcached
 
@@ -62,3 +64,27 @@ Alarm Caching
 
   * <<<message_hash>>> is a hex-encoded MD5 hash of the alarm message. This is to avoid using the whole message
     as part of a key, since there's a limit to key lengths in memcached.
+
+* ehcache
+
+  There is an <<<AlarmEhcacheClient>>> component which will use ehcache to store the alarms. The way it works is similar to the memcached client, except ehcache is used instead.
+
+  To use ehcache, the AlarmEhcacheClient needs to be set up first. It has a <<<configPath>>> property which must be set to the path to an echache XML configuration file located in the classpath. The default value is "jalarms_ehcache.xml". It also needs the cache name, since the config file can define several caches. The default is "jalarms". This is an example ehcache configuration file for jAlarms, which will only use memory storage:
+
++-----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ehcache.xsd" name="testCaches"
+    updateCheck="false" monitoring="off"
+    dynamicConfig="true">
+
+  <cache name="jalarms_test" maxElementsInMemory="1024" maxElementsOnDisk="0"
+    eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+    overflowToDisk="false" memoryStoreEvictionPolicy="LRU"
+    transactionalMode="off" statistics="false" />
+
+</ehcache>
++-----
+
+  The ehcache client is really more useful if you have access to a Terracotta ehcache server, in which case it can be used similar to the memcached client, which can be shared by several applications.

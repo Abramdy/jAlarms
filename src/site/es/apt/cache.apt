@@ -19,11 +19,13 @@ Cache de alarmas
 
 * Configuración
 
-  jAlarms incluye dos mecanismos de alarmas. El mecanismo por defecto se usa de manera transparente si no se
+  jAlarms incluye tres mecanismos de alarmas. El mecanismo por defecto se usa de manera transparente si no se
   configura uno de manera explícita, y consiste simplemente en un mapa (java.util.Map) que almacena la fecha
   de último envío de cada alarma (tomando en cuenta su fuente). Esto es muy simple y no utiliza mucha memoria;
   una aplicación que envíe 100 mensajes de alarma distintos tendrá como máximo 100 llaves en memoria, cada una
   almacenando un Long.
+
+  Los otros dos mecanismos utilizan (o pueden utilizar) almacenamiento externo que puede ser compartido por varias aplicaciones. Uno es memcached, el otro es ehcache.
 
 * memcached
 
@@ -66,3 +68,27 @@ Cache de alarmas
   * <<<message_hash>>> es una digestión MD5 del mensaje de alarma, codificada en hexadecimal. Esto es para no
   tener que usar el mensaje completo como parte de la llave, ya que hay memcached tiene un límite de longitud
   para las llaves que se pueden usar.
+
+* ehcache
+
+  Existe un componente llamado <<<AlarmEhcacheClient>>> que utiliza ehcache para almacenar las alarmas, de manera similar al cliente de memcached.
+
+  Para usar ehcache, el cliente necesita ser configurado. Tiene dos propiedades con valores por default: la primera es <<<configPath>>>, que debe contener la ruta a un archivo de configuración de ehcache, ubicado en el classpath, y la segunda es el <<<cacheName>>>, para identificar el cache a utilizar, ya que la configuración puede definir varios caches distintos. El configPath por default es "jalarms_ehcache.xml" y el nombre de cache por default es "jalarms". A continuación se presenta un ejemplo de configuración de ehcache para jAlarms, que utiliza únicamente almacenamiento en memoria:
+
++-----
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="ehcache.xsd" name="testCaches"
+    updateCheck="false" monitoring="off"
+    dynamicConfig="true">
+
+  <cache name="jalarms_test" maxElementsInMemory="1024" maxElementsOnDisk="0"
+    eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="180"
+    overflowToDisk="false" memoryStoreEvictionPolicy="LRU"
+    transactionalMode="off" statistics="false" />
+
+</ehcache>
++-----
+
+  El cliente de ehcache realmente es más útil cuando se tiene acceso a un servidor Terracotta con ehcache, ya que entonces se puede usar desde varias aplicaciones, similar a como se usa memcached.

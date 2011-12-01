@@ -14,11 +14,12 @@
 		<item name="Descargar" href="http://sourceforge.net/projects/jalarms/files/jAlarms/"/>
 	</links>
 
-	<menu name="jAlarms 1.6">
+	<menu name="jAlarms 1.6.1">
 		<item name="Introducción" href="index.html"/>
 		<item name="Documentación API Core" href="../core/javadoc/index.html" />
 		<item name="Documentación API canales" href="../channels/javadoc/index.html" />
 		<item name="Documentación API AOP" href="../aop/javadoc/index.html" />
+		<item name="Documentación Alarmas Remotas" href="../remote/javadoc/index.html" />
 		<item name="Documentación API Protobuf" href="../protobuf/javadoc/index.html" />
 		<item name="Guía de inicio" href="guide.html"/>
 		<item name="Canales de alarmas" href="channels.html" />
@@ -27,7 +28,9 @@
 		<item name="AOP y Anotaciones" href="aop.html"/>
 		<item name="Cache de alarmas" href="cache.html" />
 		<item name="Buffer de alarmas" href="buffer.html" />
-		<item name="Servicio Remoto de Alarmas" href="protobuf.html" />
+		<item name="Servicios Remotos de Alarmas" href="remote.html" />
+		<item name="Protocol Buffers" href="protobuf.html" />
+		<item name="Otros lenguajes" href="polyglot.html" />
 		<item name="Descargar" href="http://sourceforge.net/projects/jalarms/files/jAlarms/" />
 		<item name="English" href="../index.html" />
 	</menu>
