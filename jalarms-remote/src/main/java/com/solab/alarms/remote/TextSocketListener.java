@@ -16,6 +16,8 @@ public class TextSocketListener extends AbstractAlarmListener {
     private int readTimeout = 2000;
 	private ServerSocket server;
 
+    /** Creates a new instance that will listen for incoming connections on the specified TCP port when started.
+     * @param tcpPort the port on which the receiver must listen for incoming connections. */
 	public TextSocketListener(int tcpPort) {
 		port = tcpPort;
 	}
@@ -24,6 +26,8 @@ public class TextSocketListener extends AbstractAlarmListener {
         readTimeout = value;
     }
 
+    /** Starts the server, blocking the calling thread. This method is called from the
+     * startListening() method on the superclass. */
 	public void run() {
 		try {
 			server = new ServerSocket(port);
@@ -37,6 +41,7 @@ public class TextSocketListener extends AbstractAlarmListener {
 		}
 	}
 
+    /** Shuts down the server, closing the ServerSocket. */
 	@PreDestroy
 	public void shutdown() {
 		tpool.shutdown();

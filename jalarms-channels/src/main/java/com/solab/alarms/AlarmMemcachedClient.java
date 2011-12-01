@@ -54,11 +54,13 @@ public class AlarmMemcachedClient implements AlarmCache {
 		}
 	}
 
+    /** Creates the memcached client that will connect to the specified servers. */
 	@PostConstruct
 	public void init() throws IOException {
 		mc = new MemcachedClient(servers);
 	}
 
+    /** Shuts down the memached client, by calling shutdown(). */
 	@PreDestroy
 	public void disconnect() {
 		mc.shutdown();
@@ -112,6 +114,7 @@ public class AlarmMemcachedClient implements AlarmCache {
 		return String.format("Memcached(%s)", mc == null ? "disconnected" : mc.getAvailableServers());
 	}
 
+    /** Shuts down the memached client. */
 	@Override
 	public void shutdown() {
 		if (mc != null) {

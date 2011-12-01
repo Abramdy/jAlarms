@@ -25,21 +25,26 @@ public class HttpAlarmListener extends AbstractAlarmListener implements ChannelP
             Executors.newCachedThreadPool(), tpool));
     
 
+    /** Creates a new instance, which will listen on the specified port when started.
+     * @param tcpPort the port on which the receiver must listen for incoming HTTP requests. */
 	public HttpAlarmListener(int tcpPort) {
 		port = tcpPort;
 	}
 
+    /** Starts the HTTP server. This method is called from the startListening() method define on the superclass. */
 	public void run() {
         bootstrap.setPipelineFactory(this);
         bootstrap.bind(new InetSocketAddress(port));
 	}
 
+    /** Shuts down the HTTP server. */
 	@PreDestroy
 	public void shutdown() {
         //This includes the tpool.shutdown
         bootstrap.releaseExternalResources();
 	}
 
+    /** This method is part of the ChannelPipeLineFactory, a Netty interface. */
     @Override
     public ChannelPipeline getPipeline() throws Exception {
         ChannelPipeline pl = pipeline();
@@ -48,5 +53,6 @@ public class HttpAlarmListener extends AbstractAlarmListener implements ChannelP
         pl.addLast("handler", new HttpRequestHandler(getAlarmSender()));
         return pl;
     }
+
 }
 

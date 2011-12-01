@@ -25,15 +25,18 @@ public abstract class AbstractAlarmListener implements Runnable {
 	@Resource private AlarmSender sender;
 	private boolean autostart = true;
 
+    /** Sets the AlarmSender which will be used to send the alarms received remotely. */
 	public void setAlarmSender(AlarmSender value) { sender = value; }
+    /** Returns the AlarmSender used to send alarms received remotely. */
 	public AlarmSender getAlarmSender() { return sender; }
 
-	/** Tells the listener whether to autostart. Useful if defined as a component in a DI manager which can call the init() method annotated with @PostConstruct.
+	/** Tells the listener whether to autostart. Useful if defined as a component in a DI manager which can call
+     * the init() method annotated with @PostConstruct.
 	 * default is true. */
 	public void setAutostart(boolean flag) { autostart = flag; }
 
-	/** This method can be called by a DI manager. It's annotated as @PostConstruct; if autostart is set to true, then this method calls startListening,
-	 * otherwise does nothing. */
+	/** This method can be called by a DI manager. It's annotated as @PostConstruct; if autostart is set to true,
+     * then this method calls startListening, otherwise does nothing. */
 	@PostConstruct
 	public void init() {
         ((ThreadPoolExecutor)tpool).setMaximumPoolSize(Runtime.getRuntime().availableProcessors()*2);
@@ -42,7 +45,7 @@ public abstract class AbstractAlarmListener implements Runnable {
 		}
 	}
 
-	/** Starts a thread with itself as the target. */
+	/** Starts a thread with itself as the target. This is useful to start listeners without blocking the calling thread. */
 	public void startListening() {
 		if (sender == null) {
 			throw new IllegalStateException("AlarmSender has not been set, no point in starting server");

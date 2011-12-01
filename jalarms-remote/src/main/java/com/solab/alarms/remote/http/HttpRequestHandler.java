@@ -12,7 +12,7 @@ import org.jboss.netty.util.CharsetUtil;
 import java.util.List;
 import java.util.Map;
 
-/** Manejador de peticiones HTTP.
+/** The HTTP request handler. Taken from a Netty example.
  *
  * @author Enrique Zamudio
  *         Date: 29/11/11 14:55

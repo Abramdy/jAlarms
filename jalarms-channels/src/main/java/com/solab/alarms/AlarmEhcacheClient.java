@@ -49,6 +49,7 @@ public class AlarmEhcacheClient implements AlarmCache {
 	}
 	public String getCacheName() { return cacheName; }
 
+    /** Creates an ehcache CacheManager with the specified config file, and gets the cache with the cacheName from it. */
 	@PostConstruct
 	public void init() {
         URL url = getClass().getClassLoader().getResource(getConfigPath());
@@ -99,6 +100,7 @@ public class AlarmEhcacheClient implements AlarmCache {
         return true;
     }
 
+    /** Shuts down the ehcache CacheManager. */
     @Override
     public void shutdown() {
         cacheman.shutdown();
