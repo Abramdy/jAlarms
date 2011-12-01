@@ -1,0 +1,61 @@
+	-----
+	Polyglot bindings
+	-----
+	Enrique Zamudio
+	-----
+
+Uso de jAlarms desde otros lenguajes JVM
+
+  jAlarms incluye dos módulos que permiten usarlo en Groovy y Scala de manera más apropiada para esos lenguajes.
+
+  La idea principal es que se tiene un método que puede envolver un bloque de código (conocido como <closure>) y que se envíe una alarma si se arroja una excepción en dicho bloque. Esto es similar a la funcionalidad que ofrece el {{{aop.html}módulo de AOP}}, pero se puede usar en estos dos lenguajes que soportan <closures>.
+
+jAlarms en Groovy
+
+  Existe un componente llamado <<<AlarmSenderDecorator>>> que le agrega dos métodos <<<withAlarm>>> a un AlarmSender. Si se utiliza un manejador de inyección de dependencias, se puede configurar un bean de este tipo que reciba un AlarmSender como argumento en su constructor, y dicho AlarmSender será modificado con dos variantes de <<<withAlarm>>>.
+
+  Una vez modificado el AlarmSender, se puede usar de este forma en Groovy:
+
++-----
+AlarmSender sender //generalmente es inyectado
+sender.withAlarm("Oh no, ha ocurrido un error!") {
+  hacerUnaCosa()
+  hacerOtraCosa()
+}
++-----
+
+  Si se arroja una excepción en el bloque de código (que en realidad es un <closure>), se envía el mensaje de alarma, y la excepción se arroja después. Hay otra variante que recibe la fuente de alarma como segundo argumento:
+
++-----
+AlarmSender sender
+sender.withAlarm("despierten todos!", "core") {
+  blabla()
+}
+//Lo anterior es equivalente a hacer todo esto
+try {
+  blabla()
+} catch (Throwable t) {
+  sender.sendAlarm("despierten todos!", "core")
+  throw t
+}
++-----
+
+jAlarms en Scala
+
+  De manera similar, en Scala se puede usar también el método <<<withAlarm>>>. Lo único que se necesita es importar <<<com.solab.alarms.scala.bindings._>>> y se podrán usar estos métodos (uno con fuente y otro con el puro mensaje).
+
++-----
+import com.solab.alarms.scala.bindings._
+
+val sender:AlarmSender //obtener esto de algún lado
+
+sender.withAlarm("Oh no!") {
+  blabla()
+}
+sender.withAlarm("una alarma diferente", "fuente") {
+  foo()
+  bar()
+}
++-----
+
+  En Scala no se necesita configurar nada, con el <<<import>>> es suficiente.

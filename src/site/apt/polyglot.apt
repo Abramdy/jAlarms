@@ -1,0 +1,61 @@
+	-----
+	Polyglot bindings
+	-----
+	Enrique Zamudio
+	-----
+
+Using jAlarms from other JVM languages
+
+  jAlarms includes two modules that allow you to use it in a more idiomatic way in Groovy and Scala.
+
+  The main idea is to have a method wrapping a block of code (actually a closure) and send an alarm if an exception is thrown inside it. This is similar to the functionality offered by the {{{aop.html}AOP module}} but can be used in these two languages that support closures.
+
+jAlarms in Groovy
+
+  There is an <<<AlarmSenderDecorator>>> component which can be used to add a <<<withAlarm>>> method to an AlarmSender. If you are using some DI manager, you can configure an AlarmSenderDecorator bean that receives an AlarmSender as a constructor argument and the AlarmSender will be modified.
+
+  After the sender is modified, you can use it like this from your Groovy code:
+
++-----
+AlarmSender sender //this is usually injected into your component
+sender.withAlarm("Oh no, an exception was thrown!") {
+  doSomething()
+  doSomethingElse()
+}
++-----
+
+  If an exception is thrown in the block of code (which is really a closure), the alarm message is sent, and the exception is still thrown. There is another variant the alarm source as a second argument:
+
++-----
+AlarmSender sender
+sender.withAlarm("wake up everybody!", "core") {
+  blabla()
+}
+//All this is equivalent to this
+try {
+  blabla()
+} catch (Throwable t) {
+  sender.sendAlarm("wake up everybody!", "core")
+  throw t
+}
++-----
+
+jAlarms in Scala
+
+  Similarly, in Scala you can use the <<<withAlarm>>> method. You just need to import <<<com.solab.alarms.scala.bindings._>>> and you can use the methods (there are two variants, one with just the alarm and another one with an alarm source).
+
++-----
+import com.solab.alarms.scala.bindings._
+
+val sender:AlarmSender //get this from somewhere
+
+sender.withAlarm("Oh noes!") {
+  blabla()
+}
+sender.withAlarm("a different alarm", "some source") {
+  foo()
+  bar()
+}
++-----
+
+  With the Scala bindings you don't need to do any setup beyond the import line.

@@ -1,0 +1,37 @@
+	-----
+	Servicios Remotos de Alarmas
+	-----
+	Enrique Zamudio
+	-----
+
+Servicios Remotos de Alarmas
+
+  jAlarms incluye un módulo, jalarms-remote, que incluye algunos componentes que se pueden utilizar para armar una aplicación con un AlarmSender y que reciba conexiones por medio de uno o varios protocolos; una especie de servidor de alarmas. Esto es muy útil para permitir que aplicaciones no hechas para la JVM, tales como scripts en Ruby/Perl/PHP/bash, puedan enviar alarmas.
+
+La aplicación
+
+  La aplicación en cuestión necesita tener una implementación de AlarmSender, generalmente una instancia de <<<AlarmSenderImpl>>>, con los canales que se desean usar para enviar alarmas. También necesita al menos un componente que reciba peticiones de alarmas; puede ser el servidor de {{{protobuf.html}Protocol Buffers}}, que se encuentra en su propio módulo jalarms-protobuf, o bien algún otro componente de jalarms-remote. Actualmente hay dos servidores: uno que recibe alarmas por medio de HTTP y otro por medio de un simple socket de texto.
+
+El servidor HTTP
+
+  El servidor HTTP es muy sencillo de configurar: Se crea una instancia de <<<com.solab.alarms.remote.HttpAlarmListener>>> con el puerto TCP en donde se van a recibir conexiones, y se invoca el método <<<startListening()>>> para empezar a recibir conexiones.
+
+  Las peticiones HTTP pueden ser a cualquier URL; lo único que se requiere es que tengan en la parte de query, un campo "alarm" con el mensaje a enviar, y opcionalmente pueden tener un campo "src" con la fuente de la alarma.
+
+  Una manera muy sencilla de usar este servidor es con herramientas de línea de comando tales como <<<curl>>>:
+
++-----
+curl "http://host:port/?alarm=Mensaje+de+alarma&src=fuente"
++-----
+
+El servidor de texto
+
+  El servidor de texto también es bastante simple. Se crea una instancia de <<<com.solab.alarms.remote.TextSocketListener>>> con el puerto TCP por donde se quieren recibir las conexiones, y se invoca <<<startListening()>>> para empezar a escuchar conexiones entrantes.
+
+  Los clientes únicamente necesitan abrir una conexión TCP y enviar una línea de texto, que será enviada como el mensaje de alarma. Opcionalmente pueden esperar una respuesta, que generalmente será un simple "OK". En sistemas *NIX se puede usar la herramienta netcat <<<nc>>> de esta forma:
+
++-----
+echo "An alarm message"|nc host port
++-----
+
+  Si se desea especificar una fuente de alarma, se debe comenzar el texto con la fuente y separarla del mensaje de alarma con dobles dos puntos, por ejemplo <<<fuente::alarma>>>.

@@ -1,0 +1,37 @@
+	-----
+	Remote Alarm Services
+	-----
+	Enrique Zamudio
+	-----
+
+Remote Alarm Services
+
+  jAlarms includes a module, jalarms-remote, which includes some components that can be used to set up an application containing an AlarmSender and with one or more listeners for remote connections, a sort of alarm server. This is very useful to allow non-JVM applications, such as Ruby/Perl/PHP/bash scripts, to send alarms.
+
+The application
+
+  The application you set up needs to have an AlarmSender implementation (typically an instance of <<<AlarmSenderImpl>>>) with the channels you want to use. It also needs at least one remote listener. It can be the {{{protobuf.html}Protobuf listener}}, which is contained in its own module, or another listener contained in the jalarms-remote module. Currently there are two listeners: An HTTP listener and a plain text socket listener.
+
+The HTTP listener
+
+  The HTTP listener is really simple to set up: Just create an instance of <<<com.solab.alarms.remote.HttpAlarmListener>>> with the TCP port which will be used to listen for incoming connections, and start it by invoking the <<<startListening()>>> method.
+
+  The HTTP requests can be to any URL; the only thing that is required is that they have a query string with an "alarm" field, containing the alarm message to be sent, and optinally a "src" field, with the alarm source.
+
+  You can easily text the server with tools such as curl:
+
++-----
+curl "http://host:port/?alarm=Some+message&src=alarm+source"
++-----
+
+The Text listener
+
+  The text listener is also really simple, just create an instance of <<<com.solab.alarms.remote.TextSocketListener>>> with the TCP port which will be used to listen for incoming connections, and invoke <<<startListening()>>> to start listening for incoming connections.
+
+  The clients only need to open a TCP connection to the text server, send a line of text, and optionally wait for a response, which will usually be just "OK". In *NIX systems you can use the netcat tool, <<<nc>>>, like so:
+
++-----
+echo "An alarm message"|nc host port
++-----
+
+  An alarm source can be specified by using a double-colon separator, for example <<<source::message>>> will be used to send <<<message>>> and use <<<source>>> as the alarm source.
