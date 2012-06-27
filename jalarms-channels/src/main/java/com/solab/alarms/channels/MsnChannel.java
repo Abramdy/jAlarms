@@ -150,6 +150,7 @@ public class MsnChannel extends AbstractAlarmChannel {
 	 * through the application. */
 	public void addContact(String email) {
 		log.info("MsnChannel adding contact {}", email);
+		if (msn == null) throw new IllegalStateException("init() must be called before adding contacts.");
 		msn.addFriend(Email.parseStr(email), email);
 	}
 	/** This method removes the specified contact from the account's contact list, so that it won't receive
