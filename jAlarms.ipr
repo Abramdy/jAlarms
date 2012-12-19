@@ -30,9 +30,6 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-  <component name="GradleSettings">
-    <option name="SDK_HOME" value="$PROJECT_DIR$/../../../gradle-1.0-milestone-4" />
-  </component>
   <component name="GradleUISettings2">
     <setting name="root">
       <setting name="task-tab">
@@ -236,5 +233,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
   </component>
+  <component name="WebServicesPlugin" addRequiredLibraries="true" />
 </project>
 
