@@ -13,7 +13,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/spy/memcached/2.5/memcached-2.5.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-8/filestore/spy/spymemcached/2.7.3/jar/1ae59770f332d7f560a3f2894a4f14d9c3c38d62/spymemcached-2.7.3.jar" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -32,7 +32,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-context-support/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-context-support-3.0.6.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-context-support/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-context-support-3.1.0.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -68,7 +68,7 @@
     <orderEntry type="module-library" scope="TEST">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-test/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-test-3.0.6.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-test/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-test-3.1.0.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -95,7 +95,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4.1/mail-1.4.1.jar!/" />
+          <root url="jar://$MAVEN_REPOSITORY$/javax/mail/mail/1.4.4/mail-1.4.4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -104,7 +104,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-core/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-core-3.0.6.RELEASE.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-4/org.springframework/spring-core/c12498cf18507aa6433a94eb7d3e77d5/jars/spring-core-3.1.0.RELEASE.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

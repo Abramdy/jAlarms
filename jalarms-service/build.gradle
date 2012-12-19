@@ -5,10 +5,10 @@ description='A web application that contains an AlarmSender to publish it as a R
 dependencies {
 	compile project(':jalarms-core'), project(':jalarms-channels'),
 		"org.springframework:spring-web:${springVersion}"
-	providedCompile 'javax.servlet:servlet-api:2.3'
+	providedCompile 'javax.servlet:servlet-api:3.0.1'
 	runtime "org.slf4j:slf4j-simple:${slf4jVersion}",
 		"org.slf4j:jcl-over-slf4j:${slf4jVersion}"
-	testCompile 'junit:junit:4.8.2', "org.springframework:spring-test:${springVersion}"
+	testCompile 'junit:junit:4.11', "org.springframework:spring-test:${springVersion}"
 }
 
 configurations {

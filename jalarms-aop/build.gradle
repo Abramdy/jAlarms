@@ -5,10 +5,10 @@ afterEvaluate {
 }
 
 dependencies {
-	compile 'org.aspectj:aspectjrt:1.6.11', project(':jalarms-core')
+	compile 'org.aspectj:aspectjrt:1.7.1', project(':jalarms-core')
 	testCompile "org.springframework:spring-test:${springVersion}",
 		files(project(':jalarms-core').sourceSets.test.output.classesDir)
 	testRuntime "org.springframework:spring-beans:${springVersion}",
 		"org.springframework:spring-context:${springVersion}",
-		'org.aspectj:aspectjweaver:1.6.11', 'cglib:cglib:2.2.2'
+		'org.aspectj:aspectjweaver:1.7.1', 'cglib:cglib:2.2.2'
 }
