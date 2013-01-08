@@ -67,6 +67,8 @@ public class TwitterChannel extends AbstractAlarmChannel {
 	private String apiUrl = "http://api.twitter.com/1/statuses/update.xml";
 	private Set<String> sources;
 	private byte[] tsecret;
+    private int connectTimeout = 8000;
+    private int readTimeout = 9000;
 
 	/** Sets the Twitter API URL to update the user's status. The default value is
 	http://api.twitter.com/1/statues/update.xml */
@@ -94,6 +96,15 @@ public class TwitterChannel extends AbstractAlarmChannel {
 	public void setAlarmSource(Set<String> value) {
 		sources = value;
 	}
+
+    /** Sets the connection timeout, in milliseconds. Default is 8000. */
+    public void setConnectTimeout(int value) {
+        connectTimeout = value;
+    }
+    /** Sets the timeout to wait for a response, in milliseconds. Default is 9000. */
+    public void setReadTimeout(int value) {
+        readTimeout = value;
+    }
 
 	/** Sets the access token obtained with the TwitterAuth program; this allows jAlarms to post
 	 * status updates to the twitter account set up for the alarms. */
@@ -202,14 +213,15 @@ public class TwitterChannel extends AbstractAlarmChannel {
 				//Enviar datos
 				HttpURLConnection conn = (HttpURLConnection)statUrl.openConnection();
 				conn.setDoOutput(true);
-				conn.setConnectTimeout(8000);
-				conn.setReadTimeout(9000);
+				conn.setConnectTimeout(connectTimeout);
+				conn.setReadTimeout(readTimeout);
 				conn.setDefaultUseCaches(false);
 				conn.setRequestMethod("POST");
-				conn.setRequestProperty("Content-Length", Integer.toString(post_data.length()));
+                byte[] binData = post_data.toString().getBytes("UTF-8");
+				conn.setRequestProperty("Content-Length", Integer.toString(binData.length));
 				conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 				conn.connect();
-				conn.getOutputStream().write(post_data.toString().getBytes());
+				conn.getOutputStream().write(binData);
 				conn.getOutputStream().flush();
 				conn.getInputStream().read();
 				conn.disconnect();
