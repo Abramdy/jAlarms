@@ -18,7 +18,7 @@ class ScalarmSender(sender:AlarmSender) {
 		try {
 			body
 		} catch {
-			case e =>
+			case e:Exception =>
 				sender.sendAlarm(alarm, source)
 				throw e
 		}
@@ -28,7 +28,7 @@ class ScalarmSender(sender:AlarmSender) {
 		try {
 			body
 		} catch {
-			case e =>
+			case e:Exception =>
 				sender sendAlarm alarm
 				throw e
 		}
