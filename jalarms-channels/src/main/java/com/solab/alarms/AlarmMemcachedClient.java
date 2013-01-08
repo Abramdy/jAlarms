@@ -44,7 +44,7 @@ public class AlarmMemcachedClient implements AlarmCache {
 		servers = new InetSocketAddress[value.size()];
 		int pos = 0;
 		for (String s : value) {
-			int cp = value.indexOf(':');
+			int cp = s.indexOf(':');
 			if (cp > 0) {
 				servers[pos++] = new InetSocketAddress(s.substring(0, cp),
 					Integer.parseInt(s.substring(cp + 1)));
