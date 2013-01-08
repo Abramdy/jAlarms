@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import com.solab.util.NamedThreadFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,8 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractAlarmChannel implements AlarmChannel {
 
 	protected final Logger log = LoggerFactory.getLogger(getClass());
-	private ExecutorService sendPool = Executors.newSingleThreadExecutor();
+	private ExecutorService sendPool = Executors.newSingleThreadExecutor(
+            new NamedThreadFactory("jalarms-" + getClass().getSimpleName()));
 	private boolean up = true;
 	private int minResend = 60000;
 
@@ -65,6 +67,7 @@ public abstract class AbstractAlarmChannel implements AlarmChannel {
 				//Queue to the thread pool
 				sendPool.execute(task);
 			} catch (RejectedExecutionException ex) {
+                log.warn("jAlarms: thread pool rejected send task, executing synchronously", ex);
 				//Run in the calling thread
 				task.run();
 			}

@@ -18,6 +18,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 */
 package com.solab.alarms;
 
+import com.solab.util.NamedThreadFactory;
+
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -137,8 +139,8 @@ public class AlarmSenderImpl implements AlarmSender {
 	@PostConstruct
 	public void init() {
 		if (bufTime > 0) {
-			timer = Executors.newSingleThreadScheduledExecutor();
-			buffer = new ConcurrentHashMap<String, CachedAlarm>();
+			timer = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("jalarms-cached"));
+			buffer = new ConcurrentHashMap<>();
 			timer.scheduleWithFixedDelay(new Runnable(){
 				public void run() {
 					sendCachedAlarms();
