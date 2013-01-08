@@ -18,7 +18,11 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
-    <annotationProcessing enabled="false" useClasspath="true" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
   </component>
   <component name="CopyrightManager" default="">
     <module2copyright />
@@ -50,6 +54,7 @@
     <option name="SUGGEST_TYPE_AWARE_HIGHLIGHTING" value="false" />
     <option name="TYPE_AWARE_HIGHLIGHTING_ENABLED" value="true" />
   </component>
+  <component name="IdProvider" IDEtalkID="5A6DA29F8434E9EADC0C12E634A988C8" />
   <component name="InspectionProjectProfileManager">
     <profiles>
       <profile version="1.0" is_locked="false">
@@ -211,18 +216,18 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/jalarms-aop/jalarms-aop.iml" filepath="$PROJECT_DIR$/jalarms-aop/jalarms-aop.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jalarms-channels/jalarms-channels.iml" filepath="$PROJECT_DIR$/jalarms-channels/jalarms-channels.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jalarms-core/jalarms-core.iml" filepath="$PROJECT_DIR$/jalarms-core/jalarms-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jalarms-groovy/jalarms-groovy.iml" filepath="$PROJECT_DIR$/jalarms-groovy/jalarms-groovy.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jalarms-remote/jalarms-remote.iml" filepath="$PROJECT_DIR$/jalarms-remote/jalarms-remote.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jalarms-scala/jalarms-scala.iml" filepath="$PROJECT_DIR$/jalarms-scala/jalarms-scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-aop/aop.iml" filepath="$PROJECT_DIR$/jalarms-aop/aop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-channels/channels.iml" filepath="$PROJECT_DIR$/jalarms-channels/channels.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-core/core.iml" filepath="$PROJECT_DIR$/jalarms-core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-groovy/groovy-iop.iml" filepath="$PROJECT_DIR$/jalarms-groovy/groovy-iop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-remote/remote.iml" filepath="$PROJECT_DIR$/jalarms-remote/remote.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jalarms-scala/scala-iop.iml" filepath="$PROJECT_DIR$/jalarms-scala/scala-iop.iml" />
     </modules>
   </component>
   <component name="ProjectResources">
     <default-html-doctype>http://www.w3.org/1999/xhtml</default-html-doctype>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Java6" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" assert-keyword="true" jdk-15="true" project-jdk-name="Java 7" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ScalacSettings">
