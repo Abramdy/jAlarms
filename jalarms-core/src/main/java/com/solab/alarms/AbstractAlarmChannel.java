@@ -43,6 +43,13 @@ public abstract class AbstractAlarmChannel implements AlarmChannel {
             new NamedThreadFactory("jalarms-" + getClass().getSimpleName()));
 	private boolean up = true;
 	private int minResend = 60000;
+    private boolean allowSyncSend = false;
+
+    /** Allow synchronous sending of alarms, if the thread pool for a channel rejects asynchronous
+     * execution. Default is false. */
+    public void setAllowSynchronousSend(boolean flag) {
+        allowSyncSend = flag;
+    }
 
 	/** Sets the minimum amount of time between equal messsages. The same message will not be sent through
 	 * the channel if it was last sent before this interval has elapsed, unless AlarmSender.sendAlways() is
@@ -67,9 +74,14 @@ public abstract class AbstractAlarmChannel implements AlarmChannel {
 				//Queue to the thread pool
 				sendPool.execute(task);
 			} catch (RejectedExecutionException ex) {
-                log.warn("jAlarms: thread pool rejected send task, executing synchronously", ex);
-				//Run in the calling thread
-				task.run();
+                if (allowSyncSend) {
+                    log.warn("jAlarms: thread pool rejected send task, executing synchronously", ex);
+                    //Run in the calling thread
+                    task.run();
+                } else {
+                    log.error("jAlarms: Cannot send alarm '%s'(source %s) via %s",
+                            msg, source, ex);
+                }
 			}
 		}
 	}
