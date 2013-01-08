@@ -1,10 +1,10 @@
 //This is the main build script for jAlarms. It builds the subprojects included in settings.gradle.
 apply plugin: 'maven'
 description='A simple to use alarm system for Java server applications. With jAlarms you can notify different users through different means about certain events in your application, so they can receive notice via email, MSN, SMS, Twitter, etc.'
-version='1.6.2'
+version='1.7.0'
 ext.groovyVersion='1.8.8'
-ext.slf4jVersion='1.7.1'
-ext.springVersion='3.1.3.RELEASE'
+ext.slf4jVersion='1.7.2'
+ext.springVersion='3.2.0.RELEASE'
 
 /*buildscript {
 	repositories {
@@ -45,7 +45,7 @@ subprojects { subproj->
 	tasks.javadoc.options.use=true
 	tasks.javadoc.options.links=[
 		'http://download.oracle.com/javase/7/docs/api/', 'http://slf4j.org/apidocs/',
-		'http://static.springsource.org/spring/docs/3.1.x/javadoc-api/',
+		'http://static.springsource.org/spring/docs/3.2.x/javadoc-api/',
 		'http://jalarms.sourceforge.net/core/apidocs/'
 	]
 
