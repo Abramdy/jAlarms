@@ -19,7 +19,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="jalarms-core" />
+    <orderEntry type="module" module-name="core" />
     <orderEntry type="library" name="Scala" level="application" />
     <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
   </component>
