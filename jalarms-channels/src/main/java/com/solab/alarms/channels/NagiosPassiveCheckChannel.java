@@ -31,11 +31,18 @@ import com.googlecode.jsendnsca.core.builders.MessagePayloadBuilder;
 public class NagiosPassiveCheckChannel extends AbstractAlarmChannel {    
 
 	private String hostname;
-	
     private NagiosSettings settings;
-
 	private Map<String, String> sources;
+    private Level alertLevel = Level.CRITICAL;
 
+    /** Sets the NSCA message alert level. By default it's CRITICAL. */
+    public void setAlertLevel(Level value) {
+        alertLevel = value;
+    }
+    /** Return the NSCA message alert level (CRITICAL by default). */
+    public Level getAlertLevel() {
+        return alertLevel;
+    }
 	public void setSettings(NagiosSettings settings) {
 		this.settings = settings;
 	}
@@ -89,20 +96,16 @@ public class NagiosPassiveCheckChannel extends AbstractAlarmChannel {
 				MessagePayload payload = new MessagePayloadBuilder()
 					// alternatively use .withLocalHostname() or withCanonicalHostname
 					.withHostname(host)
-					.withLevel(Level.CRITICAL)
+					.withLevel(alertLevel)
 					.withServiceName(src)
 					.withMessage(msg)
 					.create();
 
 				NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(settings);
 
-				log.debug("Sending: " + payload.toString());
+				log.debug("Sending: {}", payload.toString());
                 sender.send(payload);
-            } catch (UnknownHostException uhe) {
-				log.error("Sending alarm to Nagios", uhe);
-            } catch (NagiosException ne) {
-				log.error("Sending alarm to Nagios", ne);
-            } catch (IOException ioe) {
+            } catch (NagiosException|IOException ioe) {
 				log.error("Sending alarm to Nagios", ioe);
             }
         }
