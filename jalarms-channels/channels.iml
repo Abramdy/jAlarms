@@ -17,15 +17,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/net.sf.ehcache/ehcache-core/2.6.2/jar/3baecd92015a9f8fe4cf51c8b5d3a5bddcdd3e86/ehcache-core-2.6.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/jivesoftware/smack/3.1.0/jar/916a0fe08d840a08c950f49fb59b961e14d673b8/smack-3.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -44,33 +35,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/com.adenki/smppapi/0.3.9/jar/5e32886b0d4c956615b188cf8f8370fd713a5f09/smppapi-0.3.9.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/javax.mail/mail/1.4.4/jar/b907ef0a02ff6e809392b1e7149198497fcc8e49/mail-1.4.4.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/spy/spymemcached/2.7.3/jar/1ae59770f332d7f560a3f2894a4f14d9c3c38d62/spymemcached-2.7.3.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/net.sourceforge.java-jml/jml/1.0b4/jar/c5941e318bc3aeefbc534fbc7009d3ead34ca2e1/jml-1.0b4.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -79,6 +43,42 @@
     </orderEntry>
     <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
     <orderEntry type="library" name="Groovy 2.0" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/net.sf.ehcache/ehcache-core/2.6.2/jar/3baecd92015a9f8fe4cf51c8b5d3a5bddcdd3e86/ehcache-core-2.6.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/com.adenki/smppapi/0.3.9/jar/5e32886b0d4c956615b188cf8f8370fd713a5f09/smppapi-0.3.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/javax.mail/mail/1.4.4/jar/b907ef0a02ff6e809392b1e7149198497fcc8e49/mail-1.4.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/spy/spymemcached/2.8.10/jar/d56291a9ace45cf2cbd9be15a5927ac26646c819/spymemcached-2.8.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

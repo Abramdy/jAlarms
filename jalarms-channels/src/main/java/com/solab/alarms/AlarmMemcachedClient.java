@@ -95,7 +95,7 @@ public class AlarmMemcachedClient implements AlarmCache {
 		}
 		String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
 			AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
-				source == null ? "" : source, AlarmHash.hash(message));
+				source == null ? "" : source.replace(' ', '_'), AlarmHash.hash(message));
 		//If the entry exists, don't resend
 		try {
 			return mc.get(k) == null;
