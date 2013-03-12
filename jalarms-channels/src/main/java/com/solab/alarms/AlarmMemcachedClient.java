@@ -82,9 +82,13 @@ public class AlarmMemcachedClient implements AlarmCache {
 		}
 		String k = channel == null ? String.format("jalarms:ALL:%s:%s", source == null ? "" : source,
 			AlarmHash.hash(message)): String.format("jalarms:chan%d:%s:%s", channel.hashCode(),
-				source == null ? "" : source, AlarmHash.hash(message));
+				source == null ? "" : source.replace(' ', '_'), AlarmHash.hash(message));
 		//We don't care about the actual value, just that the key exists
-		mc.set(k, channel == null ? defint : (channel.getMinResendInterval() / 1000), (byte)0);
+        try {
+            mc.set(k, channel == null ? defint : (channel.getMinResendInterval() / 1000), (byte)0);
+        } catch (RuntimeException ex) {
+            log.error("jAlarms Storing key {} in memcached", k, ex.getCause() == null ? ex : ex.getCause());
+        }
 	}
 
 	@Override
@@ -100,11 +104,11 @@ public class AlarmMemcachedClient implements AlarmCache {
 		try {
 			return mc.get(k) == null;
 		} catch (OperationTimeoutException ex) {
-			log.error("Timeout waiting to retrieve {} from memcached", k, ex);
+			log.error("jAlarms Timeout waiting to retrieve {} from memcached", k, ex);
 		} catch (RuntimeException ex) {
 			//Not a big fan of catching RTE but spymemcached throws exactly this in case of disconnection
 			//and other causes, instead of a more specific exception.
-			log.error("Retrieving key {} from memcached", k, ex.getCause() == null ? ex : ex.getCause());
+			log.error("jAlarms Retrieving key {} from memcached", k, ex.getCause() == null ? ex : ex.getCause());
 		}
 		return true;
 	}
