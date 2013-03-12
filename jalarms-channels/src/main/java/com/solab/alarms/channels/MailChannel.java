@@ -111,7 +111,7 @@ public class MailChannel extends AbstractAlarmChannel {
 			try {
 				mailer.send(mail);
 			} catch (MailException ex) {
-				log.error("MailChannel cannot send alarm '{}'", msg, ex);
+				log.error("jAlarms MailChannel cannot send alarm '{}'", msg, ex);
 			}
 		}
 

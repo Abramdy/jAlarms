@@ -102,8 +102,8 @@ public class XmppChannel extends AbstractAlarmChannel {
             addLogOutShutdownHook();
             xmpp.login(username, password);           
         } catch (XMPPException e) {
-            log.error("Cannot connect to the XMPP server " + this.host + " with port " + this.port
-                    + " using account " + this.username + " in the domain " + this.domain, e);
+            log.error("jAlarms Cannot connect to the XMPP server {} port {} account {} domain {}",
+                    this.host, this.port, this.username, this.domain, e);
             xmpp = null;
         }
     }
@@ -216,12 +216,12 @@ public class XmppChannel extends AbstractAlarmChannel {
                 alarmChat.sendMessage(msg);
                 
             } catch (XMPPException e) {
-                log.error("Error sending message to xmpp contact " + contact, e);
+                log.error("jAlarms sending message to xmpp contact {}", contact, e);
             }
         }
 
         private List<String> rosterEntriesToContactList( Collection<RosterEntry> entries ) {
-            List<String> contacts = new ArrayList<String>( entries.size() );
+            List<String> contacts = new ArrayList<>( entries.size() );
             for( RosterEntry entry : entries ) {
                     contacts.add( entry.getUser() );
             }

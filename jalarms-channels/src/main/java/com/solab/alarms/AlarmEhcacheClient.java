@@ -95,7 +95,7 @@ public class AlarmEhcacheClient implements AlarmCache {
         try {
             return cache.get(k) == null;
         } catch (CacheException ex) {
-            log.error("Retrieving key {} from ehcache", k, ex.getCause() == null ? ex : ex.getCause());
+            log.error("jAlarms Retrieving key {} from ehcache", k, ex.getCause() == null ? ex : ex.getCause());
         }
         return true;
     }

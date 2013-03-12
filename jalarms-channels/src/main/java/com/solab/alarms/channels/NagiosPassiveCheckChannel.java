@@ -103,10 +103,10 @@ public class NagiosPassiveCheckChannel extends AbstractAlarmChannel {
 
 				NagiosPassiveCheckSender sender = new NagiosPassiveCheckSender(settings);
 
-				log.debug("Sending: {}", payload.toString());
+				log.debug("jAlarms Sending to Nagios: {}", payload.toString());
                 sender.send(payload);
             } catch (NagiosException|IOException ioe) {
-				log.error("Sending alarm to Nagios", ioe);
+				log.error("jAlarms Sending alarm to Nagios", ioe);
             }
         }
     }

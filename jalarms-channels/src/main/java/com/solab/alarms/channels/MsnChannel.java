@@ -88,7 +88,7 @@ public class MsnChannel extends AbstractAlarmChannel {
 			});
 			msn.login();
 		} catch (IllegalArgumentException ex) {
-			log.error(String.format("Cannot login to MSN with account %s. MSN alarms will not be sent.", user), ex);
+			log.error(String.format("jAlarms Cannot login to MSN with account %s. MSN alarms will not be sent.", user), ex);
 			msn = null;
 		}
 	}
@@ -137,7 +137,7 @@ public class MsnChannel extends AbstractAlarmChannel {
 						try {
 							msn.sendText(d.getEmail(), msg);
 						} catch (IllegalStateException ex) {
-							log.error("MsnChannel sending to {}", d.getEmail());
+							log.error("jAlarms MsnChannel sending to {}", d.getEmail());
 						}
 					}
 				}
@@ -149,7 +149,7 @@ public class MsnChannel extends AbstractAlarmChannel {
 	/** This method adds a contact to the account's contact list, so that contacts can be added to the account
 	 * through the application. */
 	public void addContact(String email) {
-		log.info("MsnChannel adding contact {}", email);
+		log.info("jAlarms MsnChannel adding contact {}", email);
 		if (msn == null) throw new IllegalStateException("init() must be called before adding contacts.");
 		msn.addFriend(Email.parseStr(email), email);
 	}
@@ -157,8 +157,8 @@ public class MsnChannel extends AbstractAlarmChannel {
 	 * any more alarms. */
 	public void removeContact(String email) {
 		for (MsnContact cont : msn.getContactList().getContacts()) {
-			if (cont.getEmail().equals(email)) {
-				log.info("MsnChannel removing contact {} from the list", email);
+			if (cont.getEmail().getEmailAddress().equals(email)) {
+				log.info("jAlarms MsnChannel removing contact {} from the list", email);
 				msn.removeFriend(cont.getEmail(), false);
 				return;
 			}
@@ -167,7 +167,7 @@ public class MsnChannel extends AbstractAlarmChannel {
 
 	/** This method returns a list with the addresses in the contact list. */
 	public List<String> getContacts() {
-		List<String> l = new ArrayList<String>();
+		List<String> l = new ArrayList<>();
 		for (MsnContact cont : msn.getContactList().getContacts()) {
 			l.add(cont.getEmail().getEmailAddress());
 		}

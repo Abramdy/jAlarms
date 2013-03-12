@@ -113,8 +113,8 @@ public class SmppChannel extends AbstractAlarmChannel {
 			conn.bind(Connection.TRANSMITTER, uname, pass, sysType);
 			conn.setInterfaceVersion(SMPPVersion.V33);
 		} catch (IOException ex) {
-			log.error("Connecting to SMSC {}:{} as {}; SMPP alarms will not be sent.",
-					new Object[]{host, port, uname});
+			log.error("jAlarms Connecting to SMSC {}:{} as {}; SMPP alarms will not be sent.",
+					host, port, uname, ex);
 			conn = null;
 		}
 	}
@@ -137,7 +137,7 @@ public class SmppChannel extends AbstractAlarmChannel {
 			conn.unbind();
 			conn.closeLink();
 		} catch (IOException ex) {
-			log.error("Closing SMPP connection", ex);
+			log.error("jAlarms Closing SMPP connection", ex);
 		}
 	}
 
@@ -166,7 +166,7 @@ public class SmppChannel extends AbstractAlarmChannel {
 				try {
 					conn.sendRequest(req);
 				} catch (IOException ex) {
-					log.error("Sending SMPP alarm to {}", p);
+					log.error("jAlarms Sending SMPP alarm to {}", p);
 				}
 			}
 		}
