@@ -12,16 +12,16 @@
     <orderEntry type="module" module-name="core" />
     <orderEntry type="library" name="slf4j" level="application" />
     <orderEntry type="library" scope="TEST" name="Spock" level="application" />
+    <orderEntry type="library" name="Groovy 2.0" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-15/filestore/org.jboss.netty/netty/3.2.0.Final/bundle/3bf21bdf3d23cd92358e756ec96fe546d9019a51/netty-3.2.0.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.jboss.netty/netty/3.2.7.Final/bundle/1a1c5dde827576f3730bf6f3d7b389e770b90aaa/netty-3.2.7.Final.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Groovy 2.0" level="application" />
   </component>
 </module>
 

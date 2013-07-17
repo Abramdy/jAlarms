@@ -8,14 +8,13 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.7'
+		classpath 'ws.antonov.gradle.plugins:gradle-plugin-protobuf:0.8'
 	}
 }
 
 dependencies {
-	groovy "org.codehaus.groovy:groovy:${groovyVersion}"
-	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.4.1', "org.slf4j:slf4j-api:${slf4jVersion}",
-		"org.springframework:spring-context-support:${springVersion}"
+	compile project(':jalarms-core'), 'com.google.protobuf:protobuf-java:2.5.0', "org.slf4j:slf4j-api:${slf4jVersion}",
+		"org.springframework:spring-context-support:${springVersion}", "org.codehaus.groovy:groovy:${groovyVersion}"
 }
 
 tasks.jar.exclude('jalarms-protobuf.xml')

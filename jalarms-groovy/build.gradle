@@ -3,6 +3,6 @@ defaultTasks 'build'
 description='Extensions to the AlarmSender interface for use within Groovy'
 
 dependencies {
-	groovy "org.codehaus.groovy:groovy:${groovyVersion}"
-	compile project(':jalarms-core')
+	compile "org.codehaus.groovy:groovy:${groovyVersion}",
+		project(':jalarms-core')
 }
