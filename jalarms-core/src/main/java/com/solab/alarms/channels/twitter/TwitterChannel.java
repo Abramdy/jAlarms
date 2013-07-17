@@ -64,7 +64,7 @@ public class TwitterChannel extends AbstractAlarmChannel {
 	private URL statUrl;
 	private String acctoken;
 	private String prefix;
-	private String apiUrl = "http://api.twitter.com/1/statuses/update.xml";
+	private String apiUrl = "https://api.twitter.com/1.1/statuses/update.json";
 	private Set<String> sources;
 	private byte[] tsecret;
     private int connectTimeout = 8000;
