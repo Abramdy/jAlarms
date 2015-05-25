@@ -4,22 +4,22 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/groovy" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
-    <orderEntry type="library" name="Spring 3.2.0" level="application" />
+    <orderEntry type="library" name="Spring 4.1.6" level="application" />
     <orderEntry type="library" name="slf4j" level="application" />
     <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
-    <orderEntry type="library" name="Groovy 2.0" level="application" />
+    <orderEntry type="library" name="Groovy 2.1" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/net.sf.ehcache/ehcache-core/2.6.2/jar/3baecd92015a9f8fe4cf51c8b5d3a5bddcdd3e86/ehcache-core-2.6.2.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ehcache/ehcache/2.10.0/b58cccb7c875480eaafdde54a68c46d6c46c905b/ehcache-2.10.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/com.adenki/smppapi/0.3.9/jar/5e32886b0d4c956615b188cf8f8370fd713a5f09/smppapi-0.3.9.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.adenki/smppapi/0.3.9/5e32886b0d4c956615b188cf8f8370fd713a5f09/smppapi-0.3.9.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -37,7 +37,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/javax.mail/mail/1.4.4/jar/b907ef0a02ff6e809392b1e7149198497fcc8e49/mail-1.4.4.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/javax.mail/mail/1.4.7/9add058589d5d85adeb625859bf2c5eeaaedf12d/mail-1.4.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -46,7 +46,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/spy/spymemcached/2.8.10/jar/d56291a9ace45cf2cbd9be15a5927ac26646c819/spymemcached-2.8.10.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.spy/spymemcached/2.11.7/b452b67215b475e1e5b80c66a3178c571a197329/spymemcached-2.11.7.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -55,7 +55,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/jivesoftware/smack/3.1.0/jar/916a0fe08d840a08c950f49fb59b961e14d673b8/smack-3.1.0.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jivesoftware/smack/3.1.0/916a0fe08d840a08c950f49fb59b961e14d673b8/smack-3.1.0.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -64,7 +64,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsendnsca-core/1.3.1_3/bundle/ba88e854af311bd323340883226559a14b8d2427/org.apache.servicemix.bundles.jsendnsca-core-1.3.1_3.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.servicemix.bundles/org.apache.servicemix.bundles.jsendnsca-core/1.3.1_3/ba88e854af311bd323340883226559a14b8d2427/org.apache.servicemix.bundles.jsendnsca-core-1.3.1_3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -73,7 +73,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/net.sourceforge.java-jml/jml/1.0b4/jar/c5941e318bc3aeefbc534fbc7009d3ead34ca2e1/jml-1.0b4.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.java-jml/jml/1.0b4/c5941e318bc3aeefbc534fbc7009d3ead34ca2e1/jml-1.0b4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -81,4 +81,3 @@
     </orderEntry>
   </component>
 </module>
-

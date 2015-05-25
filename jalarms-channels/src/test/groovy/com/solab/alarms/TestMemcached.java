@@ -44,7 +44,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 				mc.setServers(Collections.singletonList("127.0.0.1"));
 			} else {
 				String[] s2 = slist.split(",");
-				ArrayList<String> s3 = new ArrayList<String>(s2.length);
+				ArrayList<String> s3 = new ArrayList<>(s2.length);
                 Collections.addAll(s3, s2);
 				mc.setServers(s3);
 			}
@@ -64,7 +64,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 		chan2.resend = c2t;
 		chan1.delegate = this;
 		chan2.delegate = this;
-		ArrayList<AlarmChannel> chans = new ArrayList<AlarmChannel>(2);
+		ArrayList<AlarmChannel> chans = new ArrayList<>(2);
 		chans.add(chan1);
 		chans.add(chan2);
 		sender.setAlarmChannels(chans);
@@ -77,7 +77,7 @@ public class TestMemcached implements UnitTestChannel.ChanDelegate {
 			return;
 		}
 		log.info("{} resends every {} millis, {} resends every {} millis",
-                new Object[]{ chan1.getName(), chan1.resend, chan2.getName(), chan2.resend });
+                chan1.getName(), chan1.resend, chan2.getName(), chan2.resend);
 
 		//First, check that msg1 is sent through both channels
 		log.info("Sending msg1 which should be sent immediately");
