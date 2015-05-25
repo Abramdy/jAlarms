@@ -3,5 +3,5 @@ defaultTasks 'build'
 description='A couple of functions to ease the use of jAlarms in Scala.'
 
 dependencies {
-	compile 'org.scala-lang:scala-library:2.10.2', project(':jalarms-core')
+	compile 'org.scala-lang:scala-library:2.11.6', project(':jalarms-core')
 }
