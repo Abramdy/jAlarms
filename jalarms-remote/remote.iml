@@ -12,11 +12,56 @@
     <orderEntry type="module" module-name="core" />
     <orderEntry type="library" name="slf4j" level="application" />
     <orderEntry type="library" scope="TEST" name="Spock" level="application" />
-    <orderEntry type="library" name="Groovy 2.0" level="application" />
+    <orderEntry type="library" name="Groovy 2.1" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/.gradle/caches/artifacts-23/filestore/org.jboss.netty/netty/3.2.7.Final/bundle/1a1c5dde827576f3730bf6f3d7b389e770b90aaa/netty-3.2.7.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.0.28.Final/9c66eb5e363caa6a73516f83ebb2bfe24c0b32b8/netty-codec-http-4.0.28.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec/4.0.28.Final/9b68eeff7f7f7868a1e56a60fdfc96211b38bb08/netty-codec-4.0.28.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler/4.0.28.Final/355466e03aee91961bd316a8bc32759a6e9f0c83/netty-handler-4.0.28.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.0.28.Final/cce15e674bd1b51f81be1394baaa170b73b62b9b/netty-transport-4.0.28.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.0.28.Final/f8bfa26e51e9701042c35a3135b57d2c0a770165/netty-buffer-4.0.28.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.0.28.Final/d1f452cd406c3ffa6590af77546393374d9c660b/netty-common-4.0.28.Final.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -24,4 +69,3 @@
     </orderEntry>
   </component>
 </module>
-

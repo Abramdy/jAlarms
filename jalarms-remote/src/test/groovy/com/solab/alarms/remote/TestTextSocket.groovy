@@ -18,6 +18,7 @@ class TestTextSocket extends Specification {
 	void setupSpec() {
 		server.alarmSender = sender
 		server.startListening()
+		Thread.sleep(500)
 	}
 
 	def "send alarms"() {
