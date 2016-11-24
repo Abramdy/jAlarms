@@ -22,7 +22,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
     <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
-    <orderEntry type="library" name="Spring 4.1.6" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -32,5 +31,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Spring 4.2.1" level="application" />
   </component>
 </module>

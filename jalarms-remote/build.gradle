@@ -1,9 +1,9 @@
 apply plugin:'groovy'
 
 dependencies {
-	compile project(':jalarms-core'), 'io.netty:netty-codec:4.0.28.Final',
-		'io.netty:netty-codec-http:4.0.28.Final',
+	compile project(':jalarms-core'), 'io.netty:netty-codec:4.0.42.Final',
+		'io.netty:netty-codec-http:4.0.42.Final',
 		"org.codehaus.groovy:groovy-all:${groovyVersion}"
-	testCompile 'org.spockframework:spock-spring:1.0-groovy-2.0'
+	testCompile 'org.spockframework:spock-spring:1.0-groovy-2.4'
 	testRuntime "org.springframework:spring-test:${springVersion}"
 }

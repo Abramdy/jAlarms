@@ -11,7 +11,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="core" />
     <orderEntry type="library" scope="TEST" name="jUnit" level="application" />
-    <orderEntry type="library" name="Groovy 2.0" level="application" />
+    <orderEntry type="library" name="Groovy 2.1" level="application" />
   </component>
 </module>
-
