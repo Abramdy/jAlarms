@@ -104,7 +104,9 @@ public class HttpChannel extends AbstractAlarmChannel {
 				//Replace vars in postData
 				try {
 					Utils.replaceAll(mypost, "${alarm}", URLEncoder.encode(alarm, "UTF-8"));
-					if (source != null) {
+					if (source == null) {
+                        Utils.replaceAll(mypost, "${source}", "");
+                    } else {
                         Utils.replaceAll(mypost, "${source}", URLEncoder.encode(source, "UTF-8"));
                     }
 				} catch (UnsupportedEncodingException ex) {
@@ -116,8 +118,9 @@ public class HttpChannel extends AbstractAlarmChannel {
 				try {
 					//Replace vars in url
 					String _url = Utils.replaceAll("${alarm}", URLEncoder.encode(alarm, "UTF-8"), url);
-					if (source != null) {
-                        _url = Utils.replaceAll("${source}", URLEncoder.encode(source, "UTF-8"), _url);
+					if (source == null) {
+                        _url = Utils.replaceAll("${source}", "", _url);
+                    } else {
                     }
 					myurl = new URL(_url);
 				} catch (MalformedURLException ex) {
