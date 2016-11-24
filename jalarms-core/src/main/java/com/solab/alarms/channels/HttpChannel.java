@@ -75,7 +75,7 @@ public class HttpChannel extends AbstractAlarmChannel {
 	 * @throws MalformedURLException if the url is fixed (no ${alarm} or ${source}) and it cannot be converted to a valid URL. */
 	@PostConstruct
 	public void init() throws MalformedURLException {
-		if (url.indexOf("${alarm}") < 0 && url.indexOf("${source}") < 0) {
+		if (url.indexOf("${alarm}") < 0) {
 			if (postData == null) {
 				throw new IllegalStateException("POST data is needed if URL has no variables");
 			}
@@ -89,8 +89,8 @@ public class HttpChannel extends AbstractAlarmChannel {
 	 */
 	private class HttpTask implements Runnable {
 
-		private String alarm;
-		private String source;
+		private final String alarm;
+		private final String source;
 
 		private HttpTask(String mensaje, String fuente) {
 			alarm = mensaje;
@@ -99,12 +99,14 @@ public class HttpChannel extends AbstractAlarmChannel {
 
 		public void run() {
 			URL myurl = cacheUrl;
-			String mypost = postData;
+			StringBuilder mypost = new StringBuilder(postData);
 			if (mypost != null) {
 				//Replace vars in postData
 				try {
-					mypost = Utils.replaceAll("${alarm}", URLEncoder.encode(alarm, "UTF-8"), mypost);
-					mypost = Utils.replaceAll("${source}", URLEncoder.encode(source, "UTF-8"), mypost);
+					Utils.replaceAll(mypost, "${alarm}", URLEncoder.encode(alarm, "UTF-8"));
+					if (source != null) {
+                        Utils.replaceAll(mypost, "${source}", URLEncoder.encode(source, "UTF-8"));
+                    }
 				} catch (UnsupportedEncodingException ex) {
 					log.error("Cannot encode alarm or source in POST data", ex);
 					return;
@@ -114,7 +116,9 @@ public class HttpChannel extends AbstractAlarmChannel {
 				try {
 					//Replace vars in url
 					String _url = Utils.replaceAll("${alarm}", URLEncoder.encode(alarm, "UTF-8"), url);
-					_url = Utils.replaceAll("${source}", URLEncoder.encode(source, "UTF-8"), _url);
+					if (source != null) {
+                        _url = Utils.replaceAll("${source}", URLEncoder.encode(source, "UTF-8"), _url);
+                    }
 					myurl = new URL(_url);
 				} catch (MalformedURLException ex) {
 					log.error("Resulting URL is invalid", ex);
@@ -137,7 +141,7 @@ public class HttpChannel extends AbstractAlarmChannel {
 							conn.addRequestProperty("Content-Length", Integer.toString(mypost.length()));
 						}
 						OutputStream outs = conn.getOutputStream();
-						outs.write(mypost.getBytes());
+						outs.write(mypost.toString().getBytes());
 						outs.flush();
 						ins = conn.getInputStream();
 					}
