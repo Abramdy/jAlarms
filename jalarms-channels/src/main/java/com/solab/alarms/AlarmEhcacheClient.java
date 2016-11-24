@@ -80,7 +80,7 @@ public class AlarmEhcacheClient implements AlarmCache {
                 source == null ? "" : source, AlarmHash.hash(message));
         //We don't care about the actual value, just that the key exists
         int secs = channel == null ? defint : (channel.getMinResendInterval() / 1000);
-        cache.put(new Element(k, "y", false, secs, secs));
+        cache.put(new Element(k, "y", secs, secs));
     }
 
     @Override
