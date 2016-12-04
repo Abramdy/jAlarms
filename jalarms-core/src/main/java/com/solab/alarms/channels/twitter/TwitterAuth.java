@@ -37,9 +37,9 @@ import java.util.Map;
  */
 public class TwitterAuth {
 
-	private static final String REQ_URL  = "http://api.twitter.com/oauth/request_token";
-	private static final String AXS_URL  = "http://api.twitter.com/oauth/access_token";
-	private static final String AUTH_URL = "http://api.twitter.com/oauth/authorize?oauth_token=%s&oauth_callback=oob";
+	private static final String REQ_URL  = "https://api.twitter.com/oauth/request_token";
+	private static final String AXS_URL  = "https://api.twitter.com/oauth/access_token";
+	private static final String AUTH_URL = "https://api.twitter.com/oauth/authorize?oauth_token=%s&oauth_callback=oob";
 
 	/** Parse an OAuth response, returning the keys and values as a map. */
 	private static Map<String, String> parseResponse(String resp) {
